@@ -112,7 +112,7 @@ pytest --> coverage
 --> "Production"
 --> (*)
 
-note right at Production
+note right 
   * Version bump
   * Changelog update
   * PyPI release
