@@ -1,0 +1,179 @@
+// usage.adoc - Usage guide
+= Usage Guide
+
+== Command Line Interface
+
+=== Basic Usage
+
+[source,bash]
+----
+# Check a single file
+asciidoc-lint document.adoc
+
+# Check multiple files
+asciidoc-lint doc1.adoc doc2.adoc
+
+# Check with specific output format
+asciidoc-lint --format json document.adoc
+
+# Use specific configuration
+asciidoc-lint --config my-config.yml document.adoc
+----
+
+=== Command Line Options
+
+[cols="1,1,2"]
+|===
+|Option |Default |Description
+
+|--format
+|console
+|Output format (console, json, html)
+
+|--config
+|None
+|Path to configuration file
+
+|--verbose
+|False
+|Enable verbose output
+
+|--quiet
+|False
+|Suppress non-error output
+|===
+
+== Configuration
+
+=== Configuration File
+
+[source,yaml]
+----
+# .asciidoc-lint.yml
+rules:
+  HEAD001:
+    enabled: true
+    severity: error
+  HEAD002:
+    enabled: true
+    severity: warning
+----
+
+=== Rule Configuration
+
+* Enable/disable rules
+* Set severity levels
+* Configure rule-specific options
+* Set file patterns
+
+== Output Formats
+
+=== Console Output
+
+[source]
+----
+document.adoc:15 ERROR: Heading level skipped
+document.adoc:23 WARNING: Heading should start with uppercase
+----
+
+=== JSON Output
+
+[source,json]
+----
+{
+  "findings": [
+    {
+      "rule": "HEAD001",
+      "severity": "error",
+      "message": "Heading level skipped",
+      "line": 15
+    }
+  ]
+}
+----
+
+=== HTML Report
+
+Generates a detailed HTML report with:
+
+* Summary statistics
+* Detailed findings
+* Source context
+* Rule explanations
+
+== Integration
+
+=== Git Pre-commit Hook
+
+[source,bash]
+----
+#!/bin/sh
+files=$(git diff --cached --name-only --diff-filter=ACM | grep '.adoc$')
+if [ -n "$files" ]; then
+    asciidoc-lint $files
+fi
+----
+
+=== CI/CD Integration
+
+.GitHub Actions Example
+[source,yaml]
+----
+name: Lint AsciiDoc
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lint Documentation
+        run: |
+          pip install asciidoc-linter
+          asciidoc-lint docs/
+----
+
+== Best Practices
+
+=== Document Organization
+
+* Use consistent heading levels
+* Add blank lines around blocks
+* Use proper formatting
+* Include alt text for images
+
+=== Error Resolution
+
+.Common Issues and Solutions
+[cols="1,2"]
+|===
+|Issue |Solution
+
+|Skipped heading level
+|Ensure heading levels increment by one
+
+|Missing space after =
+|Add space after heading markers
+
+|Multiple top-level headings
+|Use only one level-1 heading per document
+|===
+
+== Troubleshooting
+
+=== Common Problems
+
+* Configuration file not found
+* Rule conflicts
+* Performance issues
+* False positives
+
+=== Debug Mode
+
+[source,bash]
+----
+# Enable debug output
+asciidoc-lint --debug document.adoc
+
+# Show rule processing details
+asciidoc-lint --verbose document.adoc
+----

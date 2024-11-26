@@ -1,0 +1,64 @@
+// introduction.adoc - Project introduction
+= Introduction
+
+== About the Project
+
+AsciiDoc Linter is a Python-based tool designed to help maintain high-quality AsciiDoc documentation. It checks your AsciiDoc files for common issues and style violations, helping teams maintain consistent documentation standards.
+
+== Key Features
+
+* Heading structure validation
+* Format checking
+* Style consistency enforcement
+* Multiple output formats
+* Configurable rules
+
+== Project Goals
+
+* Improve documentation quality
+* Enforce consistent styling
+* Reduce review effort
+* Catch common mistakes early
+* Support documentation as code
+
+== Technical Overview
+
+.Technology Stack
+[cols="1,4"]
+|===
+|Component |Description
+
+|Language
+|Python 3.8+
+
+|Testing
+|unittest framework
+
+|Documentation
+|AsciiDoc
+
+|Configuration
+|YAML/JSON (planned)
+|===
+
+== Getting Started
+
+=== Prerequisites
+
+* Python 3.8 or higher
+* pip (Python package manager)
+* Git (for development)
+
+=== Quick Start
+
+[source,bash]
+----
+# Install the package
+pip install asciidoc-linter
+
+# Run a basic check
+asciidoc-lint your-document.adoc
+
+# Get help
+asciidoc-lint --help
+----

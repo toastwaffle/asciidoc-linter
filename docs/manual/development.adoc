@@ -1,0 +1,109 @@
+// development.adoc - Development guide
+= Development Guide
+
+== Setting Up Development Environment
+
+=== Clone the Repository
+
+[source,bash]
+----
+git clone https://github.com/yourusername/asciidoc-linter.git
+cd asciidoc-linter
+----
+
+=== Create Virtual Environment
+
+[source,bash]
+----
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -e .
+----
+
+== Project Structure
+
+[source]
+----
+asciidoc-linter/
+├── asciidoc_linter/       # Main package
+│   ├── __init__.py
+│   ├── cli.py            # Command line interface
+│   ├── rules.py          # Base rule classes
+│   ├── heading_rules.py  # Heading-specific rules
+│   ├── parser.py         # AsciiDoc parser
+│   └── reporter.py       # Output formatters
+├── tests/                # Test files
+│   └── rules/
+│       └── test_heading_rules.py
+├── docs/                 # Documentation
+└── README.adoc
+----
+
+== Adding New Rules
+
+=== Rule Implementation Steps
+
+1. Create a new rule class:
++
+[source,python]
+----
+from .rules import Rule, Finding, Severity, Position
+
+class MyNewRule(Rule):
+    def __init__(self):
+        super().__init__()
+        self.id = "NEW001"
+    
+    @property
+    def description(self) -> str:
+        return "Description of what this rule checks"
+    
+    def check(self, content: str) -> List[Finding]:
+        findings = []
+        # Implementation here
+        return findings
+----
+
+2. Add tests for the rule
+3. Register the rule in the linter
+4. Update documentation
+
+=== Rule Guidelines
+
+* Clear rule IDs and descriptions
+* Meaningful error messages
+* Proper severity levels
+* Contextual information in findings
+
+== Code Style
+
+=== Python Guidelines
+
+* Follow PEP 8
+* Use type hints
+* Write docstrings
+* Keep functions focused
+
+=== Documentation Guidelines
+
+* Use AsciiDoc format
+* Include examples
+* Explain error messages
+* Document configuration options
+
+== Pull Request Process
+
+1. Create feature branch
+2. Implement changes
+3. Add/update tests
+4. Update documentation
+5. Submit PR
+
+== Release Process
+
+1. Update version number
+2. Update changelog
+3. Run full test suite
+4. Create release notes
+5. Tag release
+6. Build and publish

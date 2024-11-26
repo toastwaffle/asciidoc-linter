@@ -1,0 +1,138 @@
+// testing.adoc - Testing guide
+= Testing Guide
+
+== Overview
+
+The AsciiDoc Linter uses Python's unittest framework for testing. Tests are organized by rule type and functionality.
+
+== Running Tests
+
+=== Running All Tests
+
+[source,bash]
+----
+# From project root
+python run_tests.py
+
+# With coverage report
+coverage run -m unittest discover
+coverage report
+----
+
+=== Running Specific Tests
+
+[source,bash]
+----
+# Run tests for heading rules
+python -m unittest tests/rules/test_heading_rules.py
+
+# Run a specific test class
+python -m unittest tests.rules.test_heading_rules.TestHeadingFormatRule
+
+# Run a specific test method
+python -m unittest tests.rules.test_heading_rules.TestHeadingFormatRule.test_valid_format
+----
+
+== Test Structure
+
+=== Test Organization
+
+[source]
+----
+tests/
+├── __init__.py
+├── rules/
+│   ├── __init__.py
+│   ├── test_heading_rules.py
+│   └── test_block_rules.py
+├── test_cli.py
+└── test_parser.py
+----
+
+=== Test Classes
+
+Each rule has its own test class:
+
+[source,python]
+----
+class TestHeadingFormatRule(unittest.TestCase):
+    def setUp(self):
+        self.rule = HeadingFormatRule()
+    
+    def test_valid_format(self):
+        content = """
+        = Valid Heading
+        == Another Valid
+        """
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 0)
+----
+
+== Writing Tests
+
+=== Test Guidelines
+
+* Test both valid and invalid cases
+* Include edge cases
+* Test error messages
+* Test severity levels
+* Test rule configurations
+
+=== Example Test Pattern
+
+1. Arrange: Set up test data
+2. Act: Execute the code
+3. Assert: Verify results
+
+[source,python]
+----
+def test_invalid_format(self):
+    # Arrange
+    content = "=invalid heading"
+    
+    # Act
+    findings = self.rule.check(content)
+    
+    # Assert
+    self.assertEqual(len(findings), 2)
+    self.assertEqual(findings[0].severity, Severity.ERROR)
+----
+
+== Test Data
+
+=== Sample Documents
+
+* Create realistic test documents
+* Cover various scenarios
+* Include complex cases
+* Document test case purpose
+
+=== Test Fixtures
+
+* Use setUp and tearDown
+* Share common test data
+* Clean up after tests
+
+== Continuous Integration
+
+=== GitHub Actions
+
+[source,yaml]
+----
+name: Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Tests
+        run: python run_tests.py
+----
+
+=== Coverage Requirements
+
+* Aim for 90%+ coverage
+* Cover all code paths
+* Include error conditions
+* Test edge cases

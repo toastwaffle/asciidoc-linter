@@ -1,0 +1,188 @@
+// rules.adoc - Rule documentation
+= Rule Reference
+
+== Heading Rules
+
+=== HEAD001: Heading Incrementation
+
+Ensures that heading levels are properly incremented and no levels are skipped.
+
+.Valid Example
+[source,asciidoc]
+----
+= Level 1
+== Level 2
+=== Level 3
+----
+
+.Invalid Example
+[source,asciidoc]
+----
+= Level 1
+=== Level 3  # Error: Skipped level 2
+----
+
+.Configuration Options
+[cols="1,1,2"]
+|===
+|Option |Default |Description
+
+|enabled
+|true
+|Enable/disable rule
+
+|severity
+|error
+|Rule severity level
+|===
+
+=== HEAD002: Heading Format
+
+Checks heading format for proper spacing and capitalization.
+
+.Valid Example
+[source,asciidoc]
+----
+= Title
+== Section
+=== Subsection
+----
+
+.Invalid Examples
+[source,asciidoc]
+----
+=Title        # Error: Missing space
+= title       # Warning: Lowercase
+==Section     # Error: Missing space
+----
+
+.Configuration Options
+[cols="1,1,2"]
+|===
+|Option |Default |Description
+
+|enabled
+|true
+|Enable/disable rule
+
+|severity
+|error
+|Rule severity level
+
+|check_case
+|true
+|Check for proper capitalization
+|===
+
+=== HEAD003: Multiple Top-Level Headings
+
+Ensures there is only one top-level heading per document.
+
+.Valid Example
+[source,asciidoc]
+----
+= Document Title
+== Section 1
+== Section 2
+----
+
+.Invalid Example
+[source,asciidoc]
+----
+= First Title
+== Section 1
+= Second Title  # Error: Multiple top-level headings
+----
+
+.Configuration Options
+[cols="1,1,2"]
+|===
+|Option |Default |Description
+
+|enabled
+|true
+|Enable/disable rule
+
+|severity
+|error
+|Rule severity level
+|===
+
+== Planned Rules
+
+=== BLOCK001: Block Termination
+
+[.planned]
+Checks for properly terminated blocks.
+
+.Valid Example
+[source,asciidoc]
+----
+[source,python]
+----
+def hello():
+    print("Hello")
+----
+----
+
+.Invalid Example
+[source,asciidoc]
+----
+[source,python]
+----
+def hello():
+    print("Hello")
+# Missing block termination
+----
+
+=== WS001: Whitespace
+
+[.planned]
+Ensures proper spacing around elements.
+
+.Valid Example
+[source,asciidoc]
+----
+= Title
+
+== Section
+
+Some content.
+
+[source]
+----
+code
+----
+----
+
+== Rule Development
+
+=== Creating New Rules
+
+1. Extend the base Rule class
+2. Implement check method
+3. Add tests
+4. Document the rule
+
+=== Rule Guidelines
+
+* Clear error messages
+* Meaningful context
+* Configurable options
+* Performance conscious
+
+== Rule Categories
+
+=== Current Categories
+
+* Heading Rules (HEAD*)
+* Block Rules (BLOCK*)
+* Whitespace Rules (WS*)
+* Format Rules (FMT*)
+
+=== Planned Categories
+
+* Table Rules (TABLE*)
+* Image Rules (IMG*)
+* Link Rules (LINK*)
+* Reference Rules (REF*)
