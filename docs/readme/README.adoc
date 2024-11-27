@@ -1,1 +1,1 @@
-include::../../README.adoc[]
+include::{projectRootDir}/README.adoc[]

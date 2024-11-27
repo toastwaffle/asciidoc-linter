@@ -90,7 +90,7 @@ microsite.with {
     siteFolder = '../site'
 
     // the title of the microsite, displayed in the upper left corner
-    title = '##site-title##'
+    title = 'AsciiDoc-Linter'
     // the next items configure some links in the footer
     //
     // contact eMail
