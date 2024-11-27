@@ -89,8 +89,6 @@ microsite.with {
     //see 'copyTheme' for more details
     siteFolder = '../site'
 
-    // the title of the microsite, displayed in the upper left corner
-    title = 'AsciiDoc-Linter'
     // the next items configure some links in the footer
     //
     // contact eMail
@@ -114,7 +112,7 @@ microsite.with {
     footerText = '<small class="text-white">built with <a href="https://doctoolchain.org">docToolchain</a> and <a href="https://jbake.org">jBake</a> <br /> theme: <a href="https://www.docsy.dev/">docsy</a></small>'
     //
     // site title if no other title is given
-    title = 'docToolchain'
+    title = 'AsciiDoc-Linter'
     //
     // the url to create an issue in github
     // Example: https://github.com/docToolchain/docToolchain/issues/new
