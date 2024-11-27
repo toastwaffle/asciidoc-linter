@@ -1,4 +1,4 @@
-# architecture-canvas.adoc - Architecture Communication Canvas
+// architecture-canvas.adoc - Architecture Communication Canvas
 = Architecture Communication Canvas: AsciiDoc Linter
 :toc: macro
 :toc-title: Table of Contents

@@ -1,0 +1,14 @@
+click>=8.0.0
+pyyaml>=5.1
+
+[docs]
+sphinx
+sphinx-rtd-theme
+sphinx-autodoc-typehints
+
+[test]
+pytest
+pytest-cov
+black
+isort
+flake8

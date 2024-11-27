@@ -3,8 +3,35 @@
 Base functionality and registry for AsciiDoc linting rules
 """
 
-from typing import Type, Dict, List
-from ..rules import Rule
+from typing import Type, Dict, List, Optional
+from enum import Enum
+
+class Severity(Enum):
+    """Severity levels for findings"""
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+
+class Finding:
+    """Represents a rule violation finding"""
+    def __init__(self, rule_id: str, line_number: int, message: str, 
+                 severity: Severity, context: Optional[str] = None):
+        self.rule_id = rule_id
+        self.line_number = line_number
+        self.message = message
+        self.severity = severity
+        self.context = context
+
+class Rule:
+    """Base class for all rules"""
+    id: str = ""
+    name: str = ""
+    description: str = ""
+    severity: Severity = Severity.WARNING
+
+    def check_line(self, line: str, line_number: int, context: List[str]) -> List[Finding]:
+        """Check a single line for rule violations"""
+        raise NotImplementedError()
 
 class RuleRegistry:
     """Registry for all available rules"""

@@ -1,0 +1,33 @@
+# pyproject.toml - Project configuration file
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asciidoc-linter"
+version = "0.1.0"
+description = "A linter for AsciiDoc files"
+readme = "README.adoc"
+authors = [
+    {name = "Project Author", email = "author@example.com"}
+]
+license = {text = "MIT"}
+requires-python = ">=3.8"
+dependencies = [
+    "click>=8.0.0",
+    "pyyaml>=5.1"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "coverage>=7.0.0"
+]
+
+[tool.pytest.ini_options]
+addopts = "--cov=asciidoc_linter --cov-report=xml --cov-report=term-missing"
+testpaths = ["tests"]
+
+[project.scripts]
+asciidoc-linter = "asciidoc_linter.cli:main"
