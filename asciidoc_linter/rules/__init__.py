@@ -1,8 +1,10 @@
 # __init__.py - Rules package initialization
 
-from .base_rules import Rule, Finding, Severity, Position
+from .base import Rule, Finding, Severity, Position
 from .heading_rules import HeadingHierarchyRule, HeadingFormatRule
 from .block_rules import UnterminatedBlockRule, BlockSpacingRule
+from .whitespace_rules import WhitespaceRule
+from .image_rules import ImageAttributesRule
 
 __all__ = [
     'Rule',
@@ -12,5 +14,7 @@ __all__ = [
     'HeadingHierarchyRule',
     'HeadingFormatRule',
     'UnterminatedBlockRule',
-    'BlockSpacingRule'
+    'BlockSpacingRule',
+    'WhitespaceRule',
+    'ImageAttributesRule'
 ]

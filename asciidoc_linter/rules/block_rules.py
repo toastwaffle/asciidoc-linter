@@ -1,7 +1,7 @@
 # block_rules.py - Rules for checking AsciiDoc blocks
 
 from typing import List, Dict
-from .base import Rule, Finding, Severity
+from .base import Rule, Finding, Severity, Position
 
 class UnterminatedBlockRule(Rule):
     """Rule to check for unterminated blocks in AsciiDoc files."""
@@ -49,7 +49,7 @@ class UnterminatedBlockRule(Rule):
                     findings.append(
                         Finding(
                             rule_id=self.id,
-                            line_number=line_number + 1,
+                            position=Position(line=line_number + 1),
                             message=f"Unterminated {self.block_markers[stripped_line]} starting",
                             severity=self.severity,
                             context=line
@@ -87,7 +87,7 @@ class BlockSpacingRule(Rule):
                         findings.append(
                             Finding(
                                 rule_id=self.id,
-                                line_number=line_number + 2,
+                                position=Position(line=line_number + 2),
                                 message="Block should be followed by a blank line",
                                 severity=self.severity,
                                 context=context[line_number + 1]
@@ -102,7 +102,7 @@ class BlockSpacingRule(Rule):
                         findings.append(
                             Finding(
                                 rule_id=self.id,
-                                line_number=line_number + 1,
+                                position=Position(line=line_number + 1),
                                 message="Block should be preceded by a blank line",
                                 severity=self.severity,
                                 context=line

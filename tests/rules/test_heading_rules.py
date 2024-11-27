@@ -1,14 +1,14 @@
 # test_heading_rules.py - Tests for heading rules
 """
 Tests for all heading-related rules including:
-- HeadingIncrementationRule (HEAD001)
+- HeadingHierarchyRule (HEAD001)
 - HeadingFormatRule (HEAD002)
 - HeadingMultipleTopLevelRule (HEAD003)
 """
 
 import unittest
 from asciidoc_linter.rules import Finding, Severity, Position
-from asciidoc_linter.heading_rules import HeadingIncrementationRule, HeadingFormatRule, MultipleTopLevelHeadingsRule
+from asciidoc_linter.rules.heading_rules import HeadingHierarchyRule, HeadingFormatRule, MultipleTopLevelHeadingsRule
 
 class TestHeadingFormatRule(unittest.TestCase):
     """Tests for HEAD002: Heading Format Rule"""
@@ -57,11 +57,11 @@ class TestHeadingFormatRule(unittest.TestCase):
         self.assertEqual(len(space_findings), 2, "Should have two 'missing space' findings")
         self.assertEqual(len(case_findings), 2, "Should have two 'uppercase' findings")
 
-class TestHeadingIncrementationRule(unittest.TestCase):
-    """Tests for HEAD001: Heading Incrementation Rule"""
+class TestHeadingHierarchyRule(unittest.TestCase):
+    """Tests for HEAD001: Heading Hierarchy Rule"""
     
     def setUp(self):
-        self.rule = HeadingIncrementationRule()
+        self.rule = HeadingHierarchyRule()
     
     def test_valid_heading_sequence(self):
         """Test that valid heading sequences produce no findings"""

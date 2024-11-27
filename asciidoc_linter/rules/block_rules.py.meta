@@ -1,1 +1,1 @@
-Rules for checking AsciiDoc blocks
+Updated block rules to use Position instead of line_number

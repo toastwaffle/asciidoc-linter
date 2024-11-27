@@ -12,15 +12,31 @@ class Severity(Enum):
     WARNING = "WARNING"
     ERROR = "ERROR"
 
+class Position:
+    """Represents a position in a text file"""
+    def __init__(self, line: int, column: Optional[int] = None):
+        self.line = line
+        self.column = column
+
+    def __str__(self):
+        if self.column is not None:
+            return f"line {self.line}, column {self.column}"
+        return f"line {self.line}"
+
 class Finding:
     """Represents a rule violation finding"""
-    def __init__(self, rule_id: str, line_number: int, message: str, 
+    def __init__(self, rule_id: str, position: Position, message: str, 
                  severity: Severity, context: Optional[str] = None):
         self.rule_id = rule_id
-        self.line_number = line_number
+        self.position = position
         self.message = message
         self.severity = severity
         self.context = context
+
+    @property
+    def line_number(self) -> int:
+        """Backward compatibility for line number access"""
+        return self.position.line
 
 class Rule:
     """Base class for all rules"""

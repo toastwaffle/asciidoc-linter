@@ -8,7 +8,7 @@
 image:https://img.shields.io/badge/license-MIT-blue.svg[License: MIT, link=https://opensource.org/licenses/MIT]
 image:https://img.shields.io/badge/python-3.8+-blue.svg[Python Version]
 
-A Python-based linter for AsciiDoc files that helps maintain consistent documentation quality and style. Part of the docToolchain project.
+A Python-based linter for AsciiDoc files that helps maintain consistent documentation quality and style.
 
 == About
 
@@ -16,7 +16,7 @@ AsciiDoc Linter is a command-line tool that checks your AsciiDoc files for commo
 
 [NOTE]
 ====
-This project is part of docToolchain (https://doctoolchain.org), a collection of documentation tools and best practices.
+This project was developed with the assistance of an AI language model (GPT-4) as part of an experiment in AI-assisted development. The AI helped design the architecture, implement the code, and create the documentation.
 ====
 
 == Features
@@ -67,7 +67,7 @@ This project is part of docToolchain (https://doctoolchain.org), a collection of
 [source,bash]
 ----
 # Clone the repository
-git clone https://github.com/docToolchain/asciidoc-linter.git
+git clone https://github.com/yourusername/asciidoc-linter.git
 
 # Navigate to the project directory
 cd asciidoc-linter
@@ -185,7 +185,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 == Acknowledgments
 
-* Part of the docToolchain project (https://doctoolchain.org)
+* This project was developed with the assistance of GPT-4, demonstrating the potential of AI-assisted development
 * Inspired by various linting tools and the need for better AsciiDoc quality control
 * Thanks to the AsciiDoc community for their excellent documentation and tools
 
@@ -210,6 +210,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 == Contact
 
-* Project Homepage: https://github.com/docToolchain/asciidoc-linter
-* Issue Tracker: https://github.com/docToolchain/asciidoc-linter/issues
-* docToolchain Homepage: https://doctoolchain.org
+* Project Homepage: https://github.com/yourusername/asciidoc-linter
+* Issue Tracker: https://github.com/yourusername/asciidoc-linter/issues

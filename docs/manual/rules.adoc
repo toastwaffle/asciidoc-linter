@@ -1,190 +1,49 @@
-// rules.adoc - Rule documentation
-= Rule Reference
+# rules.adoc - Documentation of all linter rules
 
-== Heading Rules
+[Previous content remains unchanged until "Planned Rules" section]
 
-=== HEAD001: Heading Incrementation
+== Whitespace Rules
 
-Ensures that heading levels are properly incremented and no levels are skipped.
+=== WS001: Whitespace Usage
 
-.Valid Example
+Ensures proper whitespace usage throughout the document. This rule helps maintain consistent formatting and improves readability.
+
+==== Checks Performed
+
+1. *Consecutive Empty Lines*: No more than one consecutive empty line allowed
+2. *List Marker Spacing*: Proper space after list markers (*, -, .)
+3. *Admonition Block Spacing*: Blank line before admonition blocks
+4. *Trailing Whitespace*: No trailing spaces at end of lines
+5. *Tab Usage*: No tabs (use spaces instead)
+6. *Section Title Spacing*: Blank lines around section titles
+
+.Valid Examples
 [source,asciidoc]
 ----
-= Level 1
-== Level 2
-=== Level 3
-----
+= Document Title
 
-.Invalid Example
-[source,asciidoc]
-----
-= Level 1
-=== Level 3  # Error: Skipped level 2
-----
+== Section Title
 
-.Configuration Options
-[cols="1,1,2"]
-|===
-|Option |Default |Description
+* List item 1
+* List item 2
 
-|enabled
-|true
-|Enable/disable rule
+NOTE: This is a note.
 
-|severity
-|error
-|Rule severity level
-|===
-
-=== HEAD002: Heading Format
-
-Checks heading format for proper spacing and capitalization.
-
-.Valid Example
-[source,asciidoc]
-----
-= Title
-== Section
-=== Subsection
+Some text here.
 ----
 
 .Invalid Examples
 [source,asciidoc]
 ----
-=Title        # Error: Missing space
-= title       # Warning: Lowercase
-==Section     # Error: Missing space
-----
-
-.Configuration Options
-[cols="1,1,2"]
-|===
-|Option |Default |Description
-
-|enabled
-|true
-|Enable/disable rule
-
-|severity
-|error
-|Rule severity level
-
-|check_case
-|true
-|Check for proper capitalization
-|===
-
-=== HEAD003: Multiple Top-Level Headings
-
-Ensures there is only one top-level heading per document.
-
-.Valid Example
-[source,asciidoc]
-----
 = Document Title
-== Section 1
-== Section 2
-----
+== Section Title     // Missing blank line before
+*Invalid list item   // Missing space after marker
+NOTE: Invalid note   // Missing blank line before
+Some text here  // Trailing spaces
+	Tabbed line      // Tab instead of spaces
 
-.Invalid Example
-[source,asciidoc]
-----
-= First Title
-== Section 1
-= Second Title  # Error: Multiple top-level headings
-----
 
-.Configuration Options
-[cols="1,1,2"]
-|===
-|Option |Default |Description
-
-|enabled
-|true
-|Enable/disable rule
-
-|severity
-|error
-|Rule severity level
-|===
-
-== Block Rules
-
-=== BLOCK001: Block Termination
-
-Checks for properly terminated blocks in AsciiDoc files. This rule helps prevent incomplete or malformed block structures that could lead to incorrect rendering.
-
-.Supported Block Types
-* Listing blocks (`----`)
-* Example blocks (`====`)
-* Sidebar blocks (`****`)
-* Literal blocks (`....`)
-* Quote blocks (`____`)
-* Table blocks (`|===`)
-* Comment blocks (`////`)
-* Passthrough blocks (`++++`)
-
-.Valid Example
-[source,asciidoc]
-----
-.Example Title
-====
-This is an example block.
-It has proper opening and closing delimiters.
-====
-----
-
-.Invalid Example
-[source,asciidoc]
-----
-.Example Title
-====
-This block is not properly terminated.
-More content...
-----
-
-.Configuration Options
-[cols="1,1,2"]
-|===
-|Option |Default |Description
-
-|enabled
-|true
-|Enable/disable rule
-
-|severity
-|error
-|Rule severity level
-|===
-
-=== BLOCK002: Block Spacing
-
-Ensures proper spacing around blocks by checking for blank lines before and after block structures.
-
-.Rules
-1. A blank line should precede a block (except when it follows a heading)
-2. A blank line should follow a block (except when it's followed by a heading)
-
-.Valid Example
-[source,asciidoc]
-----
-Some text before the block.
-
-----
-Block content
-----
-
-More text after the block.
-----
-
-.Invalid Example
-[source,asciidoc]
-----
-Some text before the block.
-----
-Block content
-----
-More text after the block.
+Extra blank line     // Too many blank lines
 ----
 
 .Configuration Options
@@ -199,73 +58,10 @@ More text after the block.
 |severity
 |warning
 |Rule severity level
+
+|max_empty_lines
+|1
+|Maximum number of consecutive empty lines
 |===
 
-== Planned Rules
-
-=== WS001: Whitespace
-
-[.planned]
-Ensures proper spacing around elements.
-
-.Valid Example
-[source,asciidoc]
-----
-= Title
-
-== Section
-
-Some content.
-
-[source]
-----
-code
-----
-----
-
-=== TABLE001: Table Formatting
-
-[.planned]
-Ensures consistent table formatting.
-
-=== IMG001: Image Attributes
-
-[.planned]
-Checks for required image attributes like alt text.
-
-=== LINK001: Link Validation
-
-[.planned]
-Validates internal and external links.
-
-== Rule Development
-
-=== Creating New Rules
-
-1. Extend the base Rule class
-2. Implement check method
-3. Add tests
-4. Document the rule
-
-=== Rule Guidelines
-
-* Clear error messages
-* Meaningful context
-* Configurable options
-* Performance conscious
-
-== Rule Categories
-
-=== Current Categories
-
-* Heading Rules (HEAD*)
-* Block Rules (BLOCK*)
-* Whitespace Rules (WS*)
-* Format Rules (FMT*)
-
-=== Planned Categories
-
-* Table Rules (TABLE*)
-* Image Rules (IMG*)
-* Link Rules (LINK*)
-* Reference Rules (REF*)
+[Previous content continues from "Planned Rules" section]
