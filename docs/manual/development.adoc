@@ -7,7 +7,7 @@
 
 [source,bash]
 ----
-git clone https://github.com/yourusername/asciidoc-linter.git
+git clone https://github.com/docToolchain/asciidoc-linter.git
 cd asciidoc-linter
 ----
 
@@ -28,16 +28,44 @@ asciidoc-linter/
 ├── asciidoc_linter/       # Main package
 │   ├── __init__.py
 │   ├── cli.py            # Command line interface
-│   ├── rules.py          # Base rule classes
-│   ├── heading_rules.py  # Heading-specific rules
+│   ├── rules/            # Rule implementations
+│   │   ├── __init__.py
+│   │   ├── base.py      # Base classes for rules
+│   │   ├── heading_rules.py
+│   │   ├── block_rules.py
+│   │   ├── whitespace_rules.py
+│   │   └── image_rules.py
 │   ├── parser.py         # AsciiDoc parser
 │   └── reporter.py       # Output formatters
 ├── tests/                # Test files
-│   └── rules/
-│       └── test_heading_rules.py
+│   └── rules/           # Rule-specific tests
 ├── docs/                 # Documentation
 └── README.adoc
 ----
+
+== Current Implementation Status
+
+=== Implemented Features
+
+* Core rule engine with base classes
+* Rule implementations:
+** Heading rules (hierarchy, format, multiple top-level)
+** Block rules (termination, spacing)
+** Whitespace rules (spacing, formatting)
+** Image rules (attributes, file verification)
+* Basic command line interface
+* Multiple output formats (console, JSON, HTML)
+* Comprehensive test suite
+
+=== Planned Features
+
+* Configuration system (YAML/JSON)
+** Rule enabling/disabling
+** Severity customization
+** Custom rule parameters
+* Additional rule types
+* IDE integration
+* Git hooks
 
 == Adding New Rules
 
@@ -47,12 +75,17 @@ asciidoc-linter/
 +
 [source,python]
 ----
-from .rules import Rule, Finding, Severity, Position
+from .base import Rule, Finding, Severity, Position
 
 class MyNewRule(Rule):
+    """
+    RULE_ID: Short description.
+    Detailed explanation of what the rule checks.
+    """
+    
     def __init__(self):
         super().__init__()
-        self.id = "NEW001"
+        self.id = "RULE_ID"
     
     @property
     def description(self) -> str:
@@ -64,7 +97,26 @@ class MyNewRule(Rule):
         return findings
 ----
 
-2. Add tests for the rule
+2. Add tests for the rule:
++
+[source,python]
+----
+class TestMyNewRule(unittest.TestCase):
+    def setUp(self):
+        self.rule = MyNewRule()
+
+    def test_valid_case(self):
+        content = "Valid content"
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 0)
+
+    def test_invalid_case(self):
+        content = "Invalid content"
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0].rule_id, "RULE_ID")
+----
+
 3. Register the rule in the linter
 4. Update documentation
 
@@ -74,6 +126,8 @@ class MyNewRule(Rule):
 * Meaningful error messages
 * Proper severity levels
 * Contextual information in findings
+* Comprehensive test cases
+* Documentation with examples
 
 == Code Style
 
@@ -81,15 +135,42 @@ class MyNewRule(Rule):
 
 * Follow PEP 8
 * Use type hints
-* Write docstrings
-* Keep functions focused
+* Write docstrings (Google style)
+* Keep functions focused and testable
+* Maximum line length: 100 characters
+* Use meaningful variable names
 
 === Documentation Guidelines
 
 * Use AsciiDoc format
-* Include examples
+* Include examples for all features
 * Explain error messages
 * Document configuration options
+* Keep README.adoc up to date
+
+== Testing
+
+=== Running Tests
+
+[source,bash]
+----
+# Run all tests
+python run_tests.py
+
+# Run specific test file
+python -m unittest tests/rules/test_heading_rules.py
+
+# Run specific test case
+python -m unittest tests.rules.test_heading_rules.TestHeadingHierarchyRule
+----
+
+=== Test Guidelines
+
+* Write tests for all new features
+* Include both positive and negative test cases
+* Test edge cases
+* Maintain high test coverage
+* Use meaningful test names
 
 == Pull Request Process
 
@@ -97,13 +178,20 @@ class MyNewRule(Rule):
 2. Implement changes
 3. Add/update tests
 4. Update documentation
-5. Submit PR
+5. Run full test suite
+6. Submit PR
 
 == Release Process
 
-1. Update version number
+1. Update version number in __init__.py
 2. Update changelog
 3. Run full test suite
 4. Create release notes
 5. Tag release
 6. Build and publish
+
+== Getting Help
+
+* GitHub Issues: https://github.com/docToolchain/asciidoc-linter/issues
+* Project Wiki: https://github.com/docToolchain/asciidoc-linter/wiki
+* docToolchain Community: https://doctoolchain.org/community

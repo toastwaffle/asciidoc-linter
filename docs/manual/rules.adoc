@@ -1,23 +1,197 @@
-# rules.adoc - Documentation of all linter rules
+// rules.adoc - Documentation of all linter rules
+= AsciiDoc Linter Rules
 
-[Previous content remains unchanged until "Planned Rules" section]
+== Heading Rules
+
+=== HEAD001: Heading Hierarchy
+
+Ensures proper heading level incrementation (no skipped levels).
+
+==== Description
+
+This rule checks that heading levels are not skipped. For example, you cannot go from a level 1 heading (=) directly to a level 3 heading (===) without having a level 2 heading (==) in between.
+
+==== Examples
+
+.Valid Heading Hierarchy
+[source,asciidoc]
+----
+= Document Title (Level 1)
+
+== Section (Level 2)
+
+=== Subsection (Level 3)
+
+== Another Section (Level 2)
+----
+
+.Invalid Heading Hierarchy
+[source,asciidoc]
+----
+= Document Title (Level 1)
+
+=== Subsection (Level 3)  // Error: Skipped Level 2
+----
+
+=== HEAD002: Heading Format
+
+Ensures proper heading format (spacing and capitalization).
+
+==== Description
+
+This rule checks two aspects of heading format:
+1. There must be a space after the = characters
+2. The heading text should start with an uppercase letter
+
+==== Examples
+
+.Valid Heading Format
+[source,asciidoc]
+----
+= Document Title
+== Section Title
+=== Subsection Title
+----
+
+.Invalid Heading Format
+[source,asciidoc]
+----
+=Document Title        // Error: No space after =
+== section title      // Warning: Starts with lowercase
+----
+
+=== HEAD003: Multiple Top Level Headings
+
+Ensures document has only one top-level heading.
+
+==== Description
+
+This rule checks that there is only one level 1 heading (=) in the document. Multiple top-level headings can indicate structural problems or accidentally split documents.
+
+==== Examples
+
+.Valid Single Top Level
+[source,asciidoc]
+----
+= Main Document Title
+
+== Section One
+== Section Two
+----
+
+.Invalid Multiple Top Level
+[source,asciidoc]
+----
+= First Title
+
+== Section One
+
+= Second Title  // Error: Multiple top-level headings
+----
+
+== Block Rules
+
+=== BLOCK001: Unterminated Blocks
+
+Checks for blocks that are not properly terminated.
+
+==== Description
+
+This rule ensures that all block delimiters are properly paired. Each opening delimiter must have a matching closing delimiter.
+
+==== Supported Block Types
+
+* Listing blocks (----)
+* Example blocks (====)
+* Sidebar blocks (****)
+* Literal blocks (....)
+* Quote blocks (____)
+* Table blocks (|===)
+* Comment blocks (////)
+* Passthrough blocks (++++).
+
+==== Examples
+
+.Valid Block Termination
+[source,asciidoc]
+----
+[source,python]
+----
+def hello():
+    print("Hello, World!")
+----
+
+.Example Block
+====
+Some example content
+====
+----
+
+.Invalid Block Termination
+[source,asciidoc]
+----
+[source,python]
+----
+def hello():
+    print("Hello, World!")
+// Error: Missing closing ----
+
+.Example Block
+====
+Some example content
+// Error: Missing closing ====
+----
+
+=== BLOCK002: Block Spacing
+
+Verifies proper spacing around blocks.
+
+==== Description
+
+This rule checks that blocks are properly separated from surrounding content with blank lines, improving readability.
+
+==== Examples
+
+.Valid Block Spacing
+[source,asciidoc]
+----
+Some text before the block.
+
+----
+Block content
+----
+
+Some text after the block.
+----
+
+.Invalid Block Spacing
+[source,asciidoc]
+----
+Some text before the block.
+----  // Warning: No blank line before block
+Block content
+----
+Some text after the block.  // Warning: No blank line after block
+----
 
 == Whitespace Rules
 
 === WS001: Whitespace Usage
 
-Ensures proper whitespace usage throughout the document. This rule helps maintain consistent formatting and improves readability.
+Ensures proper whitespace usage throughout the document.
 
 ==== Checks Performed
 
-1. *Consecutive Empty Lines*: No more than one consecutive empty line allowed
+1. *Consecutive Empty Lines*: No more than one consecutive empty line
 2. *List Marker Spacing*: Proper space after list markers (*, -, .)
 3. *Admonition Block Spacing*: Blank line before admonition blocks
 4. *Trailing Whitespace*: No trailing spaces at end of lines
 5. *Tab Usage*: No tabs (use spaces instead)
 6. *Section Title Spacing*: Blank lines around section titles
 
-.Valid Examples
+==== Examples
+
+.Valid Whitespace Usage
 [source,asciidoc]
 ----
 = Document Title
@@ -32,7 +206,7 @@ NOTE: This is a note.
 Some text here.
 ----
 
-.Invalid Examples
+.Invalid Whitespace Usage
 [source,asciidoc]
 ----
 = Document Title
@@ -46,22 +220,69 @@ Some text here  // Trailing spaces
 Extra blank line     // Too many blank lines
 ----
 
-.Configuration Options
-[cols="1,1,2"]
-|===
-|Option |Default |Description
+== Image Rules
 
-|enabled
-|true
-|Enable/disable rule
+=== IMG001: Image Attributes
 
-|severity
-|warning
-|Rule severity level
+Verifies image attributes and file references.
 
-|max_empty_lines
-|1
-|Maximum number of consecutive empty lines
-|===
+==== Description
 
-[Previous content continues from "Planned Rules" section]
+This rule checks:
+1. All images have alt text
+2. Referenced local images exist
+3. Block images have titles
+4. Image attributes are properly formatted
+
+==== Examples
+
+.Valid Image Usage
+[source,asciidoc]
+----
+// Inline image with alt text
+image:icon.png[Icon]
+
+// Block image with title and alt text
+.Figure 1: System Architecture
+image::diagram.png[Architecture Diagram]
+
+// External image with alt text
+image:https://example.com/img.png[Example Image]
+----
+
+.Invalid Image Usage
+[source,asciidoc]
+----
+// Missing alt text
+image:icon.png[]
+
+// Missing title for block image
+image::diagram.png[Diagram]
+
+// Non-existent local file
+image::missing.png[Missing Image]
+----
+
+== Planned Rules
+
+=== TABLE001: Table Formatting (Planned)
+
+Will check table formatting consistency:
+* Column alignment
+* Header row presence
+* Cell content formatting
+
+=== LINK001: Link Verification (Planned)
+
+Will verify:
+* Internal cross-references
+* External link validity
+* Anchor definitions
+
+=== FMT001: Format Consistency (Planned)
+
+Will check:
+* Consistent emphasis style
+* List formatting
+* Admonition usage
+
