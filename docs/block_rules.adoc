@@ -1,0 +1,113 @@
+// block_rules.adoc - Documentation for block-related rules
+= Block Rules Documentation
+:toc: left
+:icons: font
+:source-highlighter: rouge
+
+== BLOCK001: Unterminated Block Check
+
+=== Purpose
+This rule checks for blocks in AsciiDoc files that are not properly terminated. It helps prevent incomplete or malformed block structures that could lead to incorrect rendering.
+
+=== Severity
+ERROR
+
+=== Supported Block Types
+* Listing blocks (`----`)
+* Example blocks (`====`)
+* Sidebar blocks (`****`)
+* Literal blocks (`....`)
+* Quote blocks (`____`)
+* Table blocks (`|===`)
+* Comment blocks (`////`)
+* Passthrough blocks (`++++`)
+
+=== Examples
+
+==== Valid Block Structure
+[source,asciidoc]
+----
+.Example Title
+====
+This is an example block.
+It has proper opening and closing delimiters.
+====
+----
+
+==== Invalid Block Structure
+[source,asciidoc]
+----
+.Example Title
+====
+This block is not properly terminated.
+More content...
+----
+
+=== Error Messages
+* "Unterminated listing block starting"
+* "Unterminated example block starting"
+* "Unterminated sidebar block starting"
+* (similar messages for other block types)
+
+== BLOCK002: Block Spacing Check
+
+=== Purpose
+This rule ensures proper spacing around blocks by checking for blank lines before and after block structures. Proper spacing improves readability and follows AsciiDoc best practices.
+
+=== Severity
+WARNING
+
+=== Rules
+1. A blank line should precede a block (except when it follows a heading)
+2. A blank line should follow a block (except when it's followed by a heading)
+
+=== Examples
+
+==== Valid Block Spacing
+[source,asciidoc]
+----
+Some text before the block.
+
+----
+Block content
+----
+
+More text after the block.
+----
+
+==== Invalid Block Spacing
+[source,asciidoc]
+----
+Some text before the block.
+----
+Block content
+----
+More text after the block.
+----
+
+=== Error Messages
+* "Block should be preceded by a blank line"
+* "Block should be followed by a blank line"
+
+=== Special Cases
+* Blocks immediately following headings don't require a preceding blank line
+* Blocks immediately followed by headings don't require a following blank line
+
+== Implementation Details
+
+=== Rule Classes
+* `UnterminatedBlockRule`: Implements BLOCK001
+* `BlockSpacingRule`: Implements BLOCK002
+
+=== Configuration
+Currently, these rules are not configurable. Future versions may allow:
+
+* Custom block types
+* Adjustable severity levels
+* Exceptions for specific block types
+* Custom spacing requirements
+
+=== Performance Considerations
+* Both rules process files line by line
+* Block tracking uses minimal memory
+* Processing time is O(n) where n is the number of lines

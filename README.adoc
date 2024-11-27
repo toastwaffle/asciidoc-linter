@@ -38,11 +38,18 @@ This project was developed with the assistance of an AI language model (GPT-4) a
 |HEAD003
 |Detect multiple top-level headers
 |ERROR
+
+|BLOCK001
+|Check for unterminated blocks (listing, example, sidebar, etc.)
+|ERROR
+
+|BLOCK002
+|Verify proper spacing around blocks
+|WARNING
 |===
 
 === Planned Rules
 
-* BLOCK001: Unterminated block warnings
 * WS001: Blank lines around headers and blocks
 * TABLE001: Table formatting consistency
 * IMG001: Image alt text presence
@@ -99,6 +106,12 @@ ERROR: Heading level skipped: found h3 after h1 (line 15)
 WARNING: Heading should start with uppercase letter (line 23)
   == introduction to concepts
 
+ERROR: Unterminated listing block starting (line 45)
+  ----
+
+WARNING: Block should be preceded by a blank line (line 67)
+  ----
+
 ERROR: Multiple top-level headings found (line 30)
   First heading at line 1: 'Document Title'
 ----
@@ -126,13 +139,16 @@ asciidoc-linter/
 │   ├── cli.py
 │   ├── rules.py
 │   ├── heading_rules.py
+│   ├── block_rules.py
 │   ├── parser.py
 │   └── reporter.py
 ├── tests/
 │   └── rules/
-│       └── test_heading_rules.py
+│       ├── test_heading_rules.py
+│       └── test_block_rules.py
 ├── docs/
-│   └── requirements.adoc
+│   ├── requirements.adoc
+│   └── block_rules.adoc
 ├── README.adoc
 └── run_tests.py
 ----
@@ -162,7 +178,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 1. Phase 1 (Current)
 * ✅ Basic heading rules
-* ⏳ Block structure rules
+* ✅ Block structure rules
 * ⏳ Configuration system
 
 2. Phase 2
