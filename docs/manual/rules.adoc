@@ -108,32 +108,100 @@ Ensures there is only one top-level heading per document.
 |Rule severity level
 |===
 
-== Planned Rules
+== Block Rules
 
 === BLOCK001: Block Termination
 
-[.planned]
-Checks for properly terminated blocks.
+Checks for properly terminated blocks in AsciiDoc files. This rule helps prevent incomplete or malformed block structures that could lead to incorrect rendering.
+
+.Supported Block Types
+* Listing blocks (`----`)
+* Example blocks (`====`)
+* Sidebar blocks (`****`)
+* Literal blocks (`....`)
+* Quote blocks (`____`)
+* Table blocks (`|===`)
+* Comment blocks (`////`)
+* Passthrough blocks (`++++`)
 
 .Valid Example
 [source,asciidoc]
 ----
-[source,python]
-----
-def hello():
-    print("Hello")
-----
+.Example Title
+====
+This is an example block.
+It has proper opening and closing delimiters.
+====
 ----
 
 .Invalid Example
 [source,asciidoc]
 ----
-[source,python]
+.Example Title
+====
+This block is not properly terminated.
+More content...
 ----
-def hello():
-    print("Hello")
-# Missing block termination
+
+.Configuration Options
+[cols="1,1,2"]
+|===
+|Option |Default |Description
+
+|enabled
+|true
+|Enable/disable rule
+
+|severity
+|error
+|Rule severity level
+|===
+
+=== BLOCK002: Block Spacing
+
+Ensures proper spacing around blocks by checking for blank lines before and after block structures.
+
+.Rules
+1. A blank line should precede a block (except when it follows a heading)
+2. A blank line should follow a block (except when it's followed by a heading)
+
+.Valid Example
+[source,asciidoc]
 ----
+Some text before the block.
+
+----
+Block content
+----
+
+More text after the block.
+----
+
+.Invalid Example
+[source,asciidoc]
+----
+Some text before the block.
+----
+Block content
+----
+More text after the block.
+----
+
+.Configuration Options
+[cols="1,1,2"]
+|===
+|Option |Default |Description
+
+|enabled
+|true
+|Enable/disable rule
+
+|severity
+|warning
+|Rule severity level
+|===
+
+== Planned Rules
 
 === WS001: Whitespace
 
@@ -154,6 +222,21 @@ Some content.
 code
 ----
 ----
+
+=== TABLE001: Table Formatting
+
+[.planned]
+Ensures consistent table formatting.
+
+=== IMG001: Image Attributes
+
+[.planned]
+Checks for required image attributes like alt text.
+
+=== LINK001: Link Validation
+
+[.planned]
+Validates internal and external links.
 
 == Rule Development
 
