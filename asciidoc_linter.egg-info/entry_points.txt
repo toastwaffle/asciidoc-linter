@@ -1,2 +1,2 @@
 [console_scripts]
-asciidoc-lint = asciidoc_linter.cli:main
+asciidoc-linter = asciidoc_linter.cli:main

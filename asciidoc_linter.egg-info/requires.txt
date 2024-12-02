@@ -1,14 +1,9 @@
 click>=8.0.0
 pyyaml>=5.1
 
-[docs]
-sphinx
-sphinx-rtd-theme
-sphinx-autodoc-typehints
-
 [test]
-pytest
-pytest-cov
-black
-isort
-flake8
+pytest>=7.0.0
+pytest-cov>=4.0.0
+coverage>=7.0.0
+pytest-html>=4.1.1
+pytest-metadata>=3.1.1

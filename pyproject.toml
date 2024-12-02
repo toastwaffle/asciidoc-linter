@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 name = "asciidoc-linter"
 version = "0.1.0"
 description = "A linter for AsciiDoc files"
-readme = "README.adoc"
+readme = {file = "README.adoc", content-type = "text/asciidoc"}
 authors = [
     {name = "Project Author", email = "author@example.com"}
 ]
@@ -17,16 +17,30 @@ dependencies = [
     "click>=8.0.0",
     "pyyaml>=5.1"
 ]
+keywords = ["asciidoc", "linter", "documentation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Documentation",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License"
+]
 
 [project.optional-dependencies]
 test = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
-    "coverage>=7.0.0"
+    "coverage>=7.0.0",
+    "pytest-html>=4.1.1",
+    "pytest-metadata>=3.1.1"
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--cov=asciidoc_linter --cov-report=html --cov-report=term-missing -v"
 
 [project.scripts]
 asciidoc-linter = "asciidoc_linter.cli:main"
