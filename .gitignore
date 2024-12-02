@@ -23,3 +23,7 @@ dist/*
 .idea/*
 
 .gradle/*
+
+venv/*
+
+.coverage

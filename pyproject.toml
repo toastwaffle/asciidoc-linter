@@ -26,7 +26,6 @@ test = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "--cov=asciidoc_linter --cov-report=xml --cov-report=term-missing"
 testpaths = ["tests"]
 
 [project.scripts]

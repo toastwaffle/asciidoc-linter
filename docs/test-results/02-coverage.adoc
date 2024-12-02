@@ -1,0 +1,5 @@
+:jbake-title: Coverage
+
+++++
+<iframe src="coverage/index.html" style="height: 70vh; width: 100%"></iframe>
+++++
