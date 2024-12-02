@@ -103,12 +103,12 @@ This rule ensures that all block delimiters are properly paired. Each opening de
 
 * Listing blocks (----)
 * Example blocks (====)
-* Sidebar blocks (****)
+* Sidebar blocks (\****)
 * Literal blocks (....)
-* Quote blocks (____)
+* Quote blocks (\__\__)
 * Table blocks (|===)
 * Comment blocks (////)
-* Passthrough blocks (++++).
+* Passthrough blocks (\+++\+++).
 
 ==== Examples
 
