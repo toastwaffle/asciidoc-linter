@@ -27,7 +27,7 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
-          ./setup_test_environment
+          ./setup_test_environment.sh
 
       # Setup and generate site
       - name: setup
