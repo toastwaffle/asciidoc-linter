@@ -1,0 +1,5 @@
+          "|===",
+            "|Column 1 |Column 2",
+            "",
+            "|----\ncode block\n---- |Simple text",  # Undeclared code block
+            "|===",

@@ -1,39 +1,63 @@
 // testing.adoc - Testing guide
-= Testing Guide
+= Testing Strategy and Guide
+:toc:
+:toc-title: Table of Contents
+:sectnums:
 
-== Overview
+== Test Strategy
 
-The AsciiDoc Linter uses Python's unittest framework for testing. Tests are organized by rule type and functionality.
+=== Goals and Objectives
 
-== Running Tests
+The testing strategy for the AsciiDoc Linter aims to:
 
-=== Running All Tests
+* Ensure reliable detection of AsciiDoc formatting issues
+* Prevent false positives that could frustrate users
+* Maintain high code quality through comprehensive testing
+* Enable safe refactoring through good test coverage
+* Support rapid development through automated testing
 
-[source,bash]
-----
-# From project root
-python run_tests.py
+=== Test Levels
 
-# With coverage report
-coverage run -m unittest discover
-coverage report
-----
+==== Unit Tests
+* Test individual rules in isolation
+* Verify rule logic and error detection
+* Cover edge cases and special scenarios
+* Test configuration options
 
-=== Running Specific Tests
+==== Integration Tests
+* Test interaction between parser and rules
+* Verify correct document processing
+* Test CLI interface and options
+* Test reporter output formats
 
-[source,bash]
-----
-# Run tests for heading rules
-python -m unittest tests/rules/test_heading_rules.py
+==== System Tests
+* End-to-end testing of the linter
+* Test with real AsciiDoc documents
+* Verify correct error reporting
+* Test performance with large documents
 
-# Run a specific test class
-python -m unittest tests.rules.test_heading_rules.TestHeadingFormatRule
+=== Test Coverage Goals
 
-# Run a specific test method
-python -m unittest tests.rules.test_heading_rules.TestHeadingFormatRule.test_valid_format
-----
+[cols="2,1,2"]
+|===
+|Component |Target Coverage |Current Coverage
 
-== Test Structure
+|Core (parser, linter) |90% |0%
+|Rules |95% |88%
+|CLI |80% |0%
+|Reporter |85% |0%
+|Overall |90% |61%
+|===
+
+=== Quality Metrics
+
+* Line Coverage: Minimum 90%
+* Branch Coverage: Minimum 85%
+* Mutation Score: Minimum 80%
+* Test Success Rate: 100%
+* No known bugs in production
+
+== Test Implementation
 
 === Test Organization
 
@@ -41,98 +65,199 @@ python -m unittest tests.rules.test_heading_rules.TestHeadingFormatRule.test_val
 ----
 tests/
 ├── __init__.py
-├── rules/
+├── rules/              # Rule-specific tests
 │   ├── __init__.py
 │   ├── test_heading_rules.py
-│   └── test_block_rules.py
-├── test_cli.py
-└── test_parser.py
+│   ├── test_block_rules.py
+│   ├── test_image_rules.py
+│   └── test_whitespace_rules.py
+├── integration/        # Integration tests
+│   ├── __init__.py
+│   ├── test_parser_rules.py
+│   └── test_cli_reporter.py
+├── system/            # System tests
+│   ├── __init__.py
+│   ├── test_large_docs.py
+│   └── test_real_projects.py
+├── test_cli.py        # CLI tests
+├── test_parser.py     # Parser tests
+├── test_reporter.py   # Reporter tests
+└── test_linter.py     # Core linter tests
 ----
 
-=== Test Classes
+=== Test Patterns
 
-Each rule has its own test class:
+==== Rule Tests
 
 [source,python]
 ----
-class TestHeadingFormatRule(unittest.TestCase):
-    def setUp(self):
-        self.rule = HeadingFormatRule()
+def test_rule_pattern(self):
+    # Given: Setup test data and context
+    content = "test content"
+    rule = TestRule(config)
     
-    def test_valid_format(self):
-        content = """
-        = Valid Heading
-        == Another Valid
-        """
-        findings = self.rule.check(content)
-        self.assertEqual(len(findings), 0)
+    # When: Execute the rule
+    findings = rule.check(content)
+    
+    # Then: Verify results
+    assert_findings(findings)
 ----
 
-== Writing Tests
-
-=== Test Guidelines
-
-* Test both valid and invalid cases
-* Include edge cases
-* Test error messages
-* Test severity levels
-* Test rule configurations
-
-=== Example Test Pattern
-
-1. Arrange: Set up test data
-2. Act: Execute the code
-3. Assert: Verify results
+==== Integration Tests
 
 [source,python]
 ----
-def test_invalid_format(self):
-    # Arrange
-    content = "=invalid heading"
+def test_integration_pattern(self):
+    # Given: Setup test environment
+    doc = create_test_document()
+    linter = setup_linter()
     
-    # Act
-    findings = self.rule.check(content)
+    # When: Process document
+    results = linter.process(doc)
     
-    # Assert
-    self.assertEqual(len(findings), 2)
-    self.assertEqual(findings[0].severity, Severity.ERROR)
+    # Then: Verify complete workflow
+    verify_results(results)
 ----
 
-== Test Data
+=== Test Data Management
 
-=== Sample Documents
+==== Test Documents
+* Maintain a collection of test documents
+* Include both valid and invalid examples
+* Document the purpose of each test file
+* Version control test data
 
-* Create realistic test documents
-* Cover various scenarios
-* Include complex cases
-* Document test case purpose
+==== Test Fixtures
+* Use pytest fixtures for common setup
+* Share test data between related tests
+* Clean up test environment after each test
+* Mock external dependencies
 
-=== Test Fixtures
+== Running Tests
 
-* Use setUp and tearDown
-* Share common test data
-* Clean up after tests
+=== Local Development
 
-== Continuous Integration
+[source,bash]
+----
+# Run all tests
+python run_tests.py
 
-=== GitHub Actions
+# Run with coverage
+coverage run -m pytest
+coverage report
+coverage html
+
+# Run specific test categories
+pytest tests/rules/
+pytest tests/integration/
+pytest tests/system/
+----
+
+=== Continuous Integration
+
+==== GitHub Actions Workflow
 
 [source,yaml]
 ----
-name: Tests
+name: Test Suite
 on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, "3.10"]
     steps:
       - uses: actions/checkout@v2
-      - name: Run Tests
-        run: python run_tests.py
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          coverage run -m pytest
+          coverage report
+          coverage xml
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
 ----
 
-=== Coverage Requirements
+== Test Maintenance
 
-* Aim for 90%+ coverage
-* Cover all code paths
-* Include error conditions
-* Test edge cases
+=== Regular Activities
+
+* Review test coverage reports weekly
+* Update tests for new features
+* Refactor tests when needed
+* Review test performance
+* Update test documentation
+
+=== Quality Checks
+
+* Run mutation testing monthly
+* Review test maintainability
+* Check for flaky tests
+* Verify test isolation
+
+== Appendix
+
+=== Test Templates
+
+==== Unit Test Template
+
+[source,python]
+----
+class TestRuleName(unittest.TestCase):
+    def setUp(self):
+        """Setup test environment"""
+        self.rule = RuleUnderTest()
+    
+    def test_valid_case(self):
+        """Test with valid input"""
+        # Given
+        content = "valid content"
+        
+        # When
+        findings = self.rule.check(content)
+        
+        # Then
+        self.assertEqual(len(findings), 0)
+    
+    def test_invalid_case(self):
+        """Test with invalid input"""
+        # Given
+        content = "invalid content"
+        
+        # When
+        findings = self.rule.check(content)
+        
+        # Then
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0].severity, Severity.ERROR)
+----
+
+=== Test Checklists
+
+==== New Feature Checklist
+* [ ] Unit tests written
+* [ ] Integration tests updated
+* [ ] System tests verified
+* [ ] Coverage goals met
+* [ ] Documentation updated
+
+==== Test Review Checklist
+* [ ] Tests follow patterns
+* [ ] Coverage adequate
+* [ ] Edge cases covered
+* [ ] Error cases tested
+* [ ] Documentation clear
+
+== References
+
+* link:https://docs.pytest.org/[Pytest Documentation]
+* link:https://coverage.readthedocs.io/[Coverage.py Documentation]
+* link:https://github.com/marketplace/actions/codecov[Codecov GitHub Action]

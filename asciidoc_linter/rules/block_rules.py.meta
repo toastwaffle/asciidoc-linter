@@ -1,1 +1,1 @@
-Updated block rules to use Position instead of line_number
+Updated implementation of block rules

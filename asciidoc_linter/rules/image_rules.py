@@ -2,7 +2,7 @@
 
 import os
 import re
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional, Tuple, Any, Union
 from .base import Rule, Finding, Severity, Position
 
 class ImageAttributesRule(Rule):
@@ -17,6 +17,13 @@ class ImageAttributesRule(Rule):
         super().__init__()
         self.current_line = 0
         self.current_context = ""
+
+    def check(self, document: List[Any]) -> List[Finding]:
+        """Check the entire document for image-related issues."""
+        findings = []
+        for i, line in enumerate(document):
+            findings.extend(self.check_line(line, i, document))
+        return findings
 
     def _check_image_path(self, path: str) -> List[Finding]:
         """Check if the image file exists and is accessible."""
@@ -122,14 +129,21 @@ class ImageAttributesRule(Rule):
         
         return attributes
 
-    def check_line(self, line: str, line_number: int, context: List[str]) -> List[Finding]:
+    def check_line(self, line: Union[str, Any], line_number: int, context: List[Any]) -> List[Finding]:
         """Check a line for image-related issues."""
         findings = []
         self.current_line = line_number
-        self.current_context = line
+        
+        # Handle Header objects and other non-string types
+        if hasattr(line, 'content'):
+            line_content = line.content
+        else:
+            line_content = str(line)
+            
+        self.current_context = line_content
         
         # Check for block images
-        block_image_match = re.match(r'image::([^[]+)(?:\[(.*)\])?', line.strip())
+        block_image_match = re.match(r'image::([^[]+)(?:\[(.*)\])?', line_content.strip())
         if block_image_match:
             path = block_image_match.group(1)
             attributes = self._parse_attributes(block_image_match.group(2) or '')
@@ -139,7 +153,7 @@ class ImageAttributesRule(Rule):
             return findings
         
         # Check for inline images
-        for inline_match in re.finditer(r'image:([^[]+)(?:\[(.*?)\])?', line):
+        for inline_match in re.finditer(r'image:([^[]+)(?:\[(.*?)\])?', line_content):
             path = inline_match.group(1)
             attributes = self._parse_attributes(inline_match.group(2) or '')
             
