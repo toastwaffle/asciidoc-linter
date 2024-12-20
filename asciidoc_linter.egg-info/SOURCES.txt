@@ -42,6 +42,7 @@ asciidoc_linter/rules/block_rules.py
 asciidoc_linter/rules/heading_rules.py
 asciidoc_linter/rules/heading_rules.py.meta
 asciidoc_linter/rules/image_rules.py
+asciidoc_linter/rules/table_rules.py
 asciidoc_linter/rules/whitespace_rules.py
 docs/.meta
 docs/requirements.adoc
@@ -95,6 +96,8 @@ tests/__init__.py
 tests/__init__.py.meta
 tests/test.adoc
 tests/test.adoc.meta
+tests/test_linter.py
+tests/test_reporter.py
 tests/rules/.meta
 tests/rules/__init__.py
 tests/rules/__init__.py.meta
@@ -102,4 +105,5 @@ tests/rules/test_block_rules.py
 tests/rules/test_heading_rules.py
 tests/rules/test_heading_rules.py.meta
 tests/rules/test_image_rules.py
+tests/rules/test_table_rules.py
 tests/rules/test_whitespace_rules.py

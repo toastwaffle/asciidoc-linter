@@ -49,13 +49,17 @@ if __name__ == '__main__':
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     test_report = reports_dir / f'test_report_{timestamp}.html'
     
-    # Construct pytest command with only HTML report arguments
+    # Construct pytest command with HTML report and coverage arguments
     cmd = [
         sys.executable,
         '-m',
         'pytest',
         f'--html={test_report}',
-        '--self-contained-html'
+        '--self-contained-html',
+        '--cov=asciidoc_linter',
+        '--cov-report=html',
+        '--cov-report=term',
+        '--cov-config=.coveragerc'
     ]
     
     print(f"Executing command: {' '.join(cmd)}")
@@ -67,7 +71,7 @@ if __name__ == '__main__':
         # If tests were successful, copy reports to docs
         if result.returncode == 0:
             try:
-                docs_dir = Path('build/microsite/output/test-results')
+                docs_dir = Path('docs/test-results')  # Changed path to match project structure
                 final_test, final_cov = copy_reports(test_report, docs_dir)
                 print(f"\nReports copied to docs:")
                 print(f"Test report: {final_test}")

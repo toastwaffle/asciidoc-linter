@@ -18,7 +18,7 @@ from .rules.block_rules import (
 from .rules.whitespace_rules import WhitespaceRule
 from .rules.image_rules import ImageAttributesRule
 from .parser import AsciiDocParser
-from .reporter import LintReport, LintError
+from .reporter import LintReport, LintError, ConsoleReporter, Reporter
 
 class AsciiDocLinter:
     """Main linter class that coordinates parsing and rule checking"""
@@ -34,6 +34,20 @@ class AsciiDocLinter:
             WhitespaceRule(),
             ImageAttributesRule()
         ]
+        self.reporter = ConsoleReporter()  # Default reporter
+    
+    def set_reporter(self, reporter: Reporter) -> None:
+        """Set the reporter to use for output formatting"""
+        self.reporter = reporter
+    
+    def lint(self, content: str, source: Optional[str] = None) -> str:
+        """
+        Lint content and return formatted output using the current reporter
+        
+        This is the main entry point used by the CLI
+        """
+        report = self.lint_string(content, source)
+        return self.reporter.format_report(report)
     
     def lint_file(self, file_path: Path) -> LintReport:
         """Lint a single file and return a report"""

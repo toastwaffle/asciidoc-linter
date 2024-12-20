@@ -1,161 +1,214 @@
-// implementation_plan.adoc - Implementation plan for AsciiDoc Linter
+# implementation_plan.adoc - Implementation plan for AsciiDoc Linter
 = AsciiDoc Linter Implementation Plan
 :toc:
 :toc-placement: preamble
 :sectanchors:
 :sectlinks:
+:last-update-label: Zuletzt aktualisiert
+:last-update: 2024-12-20
 
-== Current Status Analysis (Updated December 2023)
+== Current Status Analysis
 
-=== Test Status
-All tests are currently passing, including:
+=== Test Infrastructure Status (Updated December 2024)
+* ✅ Coverage Tools working
+** Coverage report generation fixed
+** HTML reports generating correctly
+** Source code detection working
+* ✅ Test Infrastructure working
+** 130 tests implemented
+** 122 tests passing (94%)
+** 8 tests failing
+* ✅ Overall test coverage at 95%
+** 685 statements total
+** 36 statements not covered
+** Most modules >90% coverage
 
-* Heading Rules Tests
-** Hierarchy checking
-** Format validation
-** Multiple top-level detection
+=== Module Coverage Status
 
-* Block Rules Tests
-** Unterminated block detection
-** Block spacing validation
+==== Perfect Coverage (100%)
+* ✅ image_rules.py
+* ✅ parser.py
+* ✅ __init__.py files
 
-* Image Rules Tests
-** Attribute validation
-** File reference checking
-** Alt text verification
+==== Very Good Coverage (95-99%)
+* ✅ whitespace_rules.py (98%)
+* ✅ cli.py (98%)
+* ✅ base.py (97%)
+* ✅ linter.py (97%)
+* ✅ table_rules.py (95%)
 
-* Table Rules Tests
-** Content validation
-** Format checking
-** Structure verification
+==== Good Coverage (85-94%)
+* ⚠️ block_rules.py (89%)
+* ⚠️ heading_rules.py (93%)
+* ⚠️ reporter.py (85%)
 
-* Whitespace Rules Tests
-** Line spacing
-** List marker formatting
-** Tab detection
+==== Critical Coverage Issues
+* ❌ rules.py (0%)
 
-=== Test Coverage Status
-Test coverage tools (coverage.py and pytest-html) need attention:
+=== Failed Tests Analysis
 
-* coverage report command not working properly
-* HTML test report generation failing
-* Need to fix configuration for both tools
+==== Core Architecture Issues
+* ❌ Severity Implementation
+** Inconsistent case handling (ERROR vs error)
+** 3 failing tests in different test files
+* ❌ Rule Base Class
+** Missing rule_id attribute
+** Default value should be "BASE"
 
-== Implementation Plan
+==== Table Processing Issues
+* ❌ Cell Extraction
+** extract_cells returns wrong number of cells
+** 2 failing tests
+* ❌ Column Counting
+** count_columns returns wrong value for table markers
+** 1 failing test
+* ❌ List Detection
+** Multiple findings for single list issue
+** 2 failing tests
 
-=== Phase 1: Tool Infrastructure (1-2 days)
+== Updated Implementation Plan
 
-==== Step 1: Test Coverage Tools (Priority: High)
-* Fix coverage.py integration
-** Update configuration
-** Ensure proper source code detection
-** Fix report generation
+=== Phase 1: Fix Failed Tests (2-3 days)
 
-==== Step 2: Test Reporting (Priority: High)
-* Fix HTML test report generation
-** Update pytest configuration
-** Fix command line arguments handling
-** Add proper output directory handling
-
-=== Phase 2: New Features (3-4 days)
-
-==== Step 1: Table Validation Enhancement (Priority: High)
-* Add new table rules:
-** Cell content formatting validation
-** Complex content structure checking
-** Table caption validation
+==== Step 1: Core Architecture Fixes (Priority: High)
+* Fix Severity implementation:
+** Standardize on lowercase values
+** Update all rule implementations
+** Fix affected tests
+* Fix Rule base class:
+** Add default rule_id
+** Update rule_id property
 * Implementation tasks:
-** Create new TableContentFormatRule
-** Add tests for complex table structures
-** Update documentation
+** Update base.py
+** Fix test_base.py
+** Fix test_base_rules.py
 
-==== Step 2: Link Checking (Priority: Medium)
-* Implement link validation:
-** Internal cross-reference checking
-** External URL validation
-** Anchor existence verification
+==== Step 2: Table Processing Fixes (Priority: High)
+* Fix cell extraction:
+** Review cell parsing logic
+** Fix prefix handling
+** Update tests
+* Fix column counting:
+** Review table marker handling
+** Update counting logic
+* Fix list detection:
+** Review finding generation
+** Update validation logic
 * Implementation tasks:
-** Create LinkValidationRule class
-** Add URL checking functionality
-** Add tests for various link types
+** Update table_rules.py
+** Fix all table-related tests
 
-=== Phase 3: Integration Features (4-5 days)
+=== Phase 2: Coverage Improvements (2-3 days)
 
-==== Step 1: VS Code Extension (Priority: Medium)
-* Create basic VS Code extension
-** Real-time linting
-** Problem highlighting
-** Quick fixes for common issues
+==== Step 1: Critical Coverage (Priority: High)
+* Fix rules.py coverage:
+** Add missing tests
+** Review implementation
 * Implementation tasks:
-** Set up extension project
-** Implement language server protocol
-** Add configuration options
+** Add test_rules.py
+** Update rules.py if needed
 
-==== Step 2: Git Integration (Priority: Low)
-* Add Git hooks support:
-** Pre-commit hook implementation
-** Configuration options
-** Documentation
+==== Step 2: Good Coverage Improvements (Priority: Medium)
+* Improve block_rules.py coverage:
+** Add tests for lines 26, 66, 68, 74, 92, 138, 140, 146
+* Improve heading_rules.py coverage:
+** Add tests for lines 25, 65, 90, 108, 145, 153
+* Improve reporter.py coverage:
+** Add tests for lines 51-59
+
+=== Phase 3: Quality Improvements (2-3 days)
+
+==== Step 1: Code Quality (Priority: Medium)
+* Add type hints to all modules
+* Improve error messages
+* Add debug logging
 * Implementation tasks:
-** Create hook scripts
-** Add configuration handling
-** Write installation guide
+** Add mypy configuration
+** Update error handling
+** Add logging framework
+
+==== Step 2: Documentation (Priority: Medium)
+* Update all documentation
+* Add troubleshooting guide
+* Add development guide
+* Implementation tasks:
+** Review all .adoc files
+** Update examples
+** Add migration guides
 
 == Implementation Schedule
 
-[cols="1,2,1,1"]
+[cols="1,2,1,1,1"]
 |===
-|Phase |Task |Effort |Priority
+|Phase |Task |Effort |Priority |Status
 
 |1
-|Test Coverage Tools
+|Core Architecture Fixes
 |1 day
 |High
+|Not Started
 
 |1
-|Test Reporting
+|Table Processing Fixes
+|1-2 days
+|High
+|Not Started
+
+|2
+|Critical Coverage
 |1 day
 |High
+|Not Started
 
 |2
-|Table Validation
-|2 days
-|High
-
-|2
-|Link Checking
-|2 days
+|Good Coverage Improvements
+|1-2 days
 |Medium
+|Not Started
 
 |3
-|VS Code Extension
-|3 days
+|Code Quality
+|1-2 days
 |Medium
+|Not Started
 
 |3
-|Git Integration
-|2 days
-|Low
+|Documentation
+|1 day
+|Medium
+|Not Started
 |===
 
-== Next Steps
+== Next Steps (Prioritized)
 
-1. Fix test coverage tools
-2. Implement enhanced table validation
-3. Add link checking functionality
-4. Start VS Code extension development
+1. Fix Severity implementation
+2. Fix Rule base class
+3. Fix table processing
+4. Add tests for rules.py
+5. Improve coverage of other modules
 
 == Success Criteria
 
-* All test tools working properly
-* Test coverage >90% for all modules
-* Documentation up to date
-* New features fully tested
-* IDE integration working reliably
+* All tests passing
+* Coverage >95% for all modules
+* Documentation up-to-date
+* Code quality improved
+
+== Quality Gates
+
+=== For Test Coverage
+* No module with <85% coverage
+* Core modules >95% coverage
+* Overall project coverage >95%
+
+=== For Code Quality
+* All public methods documented
+* Type hints in all modules
+* Consistent error handling
 
 == Notes
 
-* All previously reported test failures have been fixed
-* ImageAttributesRule and TableContentRule are now working correctly
-* Focus should be on new features and tool infrastructure
-* Consider adding performance benchmarks for large documents
+* Priority on fixing failed tests
+* Coverage generally good except for rules.py
+* Table processing needs significant work
+* Consider adding performance tests

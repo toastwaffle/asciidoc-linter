@@ -40,6 +40,24 @@ class Reporter:
         
         return "\n".join(output)
 
+class ConsoleReporter(Reporter):
+    """Reports findings in console format with colors"""
+    
+    def format_report(self, report: LintReport) -> str:
+        """Format the report with ANSI colors"""
+        if not report.errors:
+            return "\033[32m✓ No issues found\033[0m"
+            
+        output = []
+        for error in report.errors:
+            location = f"\033[36mline {error.line}\033[0m"
+            if error.file:
+                location = f"\033[36m{error.file}:{location}\033[0m"
+            
+            output.append(f"\033[31m✗\033[0m {location}: {error.message}")
+        
+        return "\n".join(output)
+
 class JsonReporter(Reporter):
     """Reports findings in JSON format"""
     

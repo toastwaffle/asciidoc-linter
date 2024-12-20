@@ -25,7 +25,7 @@ class TableFormatRule(Rule):
     def description(self) -> str:
         return "Ensures consistent table formatting (alignment and structure)"
 
-    def extract_table_lines(self, lines: List[str]) -> List[List[Tuple[int, str]]]:
+    def extract_table_lines(self, content: Union[List[str], List[Tuple[int, str]]]) -> List[List[Tuple[int, str]]]:
         """Extract tables from document lines.
         Returns a list of tables, where each table is a list of (line_number, line) tuples.
         """
@@ -33,7 +33,11 @@ class TableFormatRule(Rule):
         current_table = []
         in_table = False
         
-        for line_num, line in enumerate(lines):
+        # Convert content to list of tuples if it's not already
+        if content and isinstance(content[0], str):
+            content = [(i, line) for i, line in enumerate(content)]
+        
+        for line_num, line in content:
             if not isinstance(line, str):
                 continue
                 
@@ -49,6 +53,10 @@ class TableFormatRule(Rule):
                     current_table = [(line_num, line)]
             elif in_table:
                 current_table.append((line_num, line))
+        
+        # Handle unclosed table
+        if in_table and current_table:
+            tables.append(current_table)
         
         return tables
 
@@ -66,11 +74,11 @@ class TableFormatRule(Rule):
                 positions = [m.start() for m in matches]
                 if cell_positions and positions != cell_positions[0]:
                     findings.append(Finding(
-                        rule_id=self.id,
                         message="Column alignment is inconsistent with previous rows",
                         severity=Severity.WARNING,
                         position=Position(line=line_num + 1),
-                        context=line
+                        rule_id=self.id,
+                        context={"line": line}
                     ))
                     break
                 cell_positions.append(positions)
@@ -94,16 +102,16 @@ class TableFormatRule(Rule):
             if next_line < len(table_lines) - 1:  # Ensure we're not at the end
                 if table_lines[next_line][1].strip():  # Line after header should be empty
                     findings.append(Finding(
-                        rule_id=self.id,
                         message="Header row should be followed by an empty line",
                         severity=Severity.WARNING,
                         position=Position(line=table_lines[next_line][0] + 1),
-                        context=table_lines[next_line][1]
+                        rule_id=self.id,
+                        context={"line": table_lines[next_line][1]}
                     ))
         
         return findings
 
-    def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
+    def check(self, document: Union[Dict[str, Any], List[Any], str]) -> List[Finding]:
         findings = []
         
         # Convert document to lines if it's not already
@@ -165,25 +173,25 @@ class TableStructureRule(Rule):
                     column_count = current_columns
                 elif current_columns != column_count:
                     findings.append(Finding(
-                        rule_id=self.id,
                         message=f"Inconsistent column count. Expected {column_count}, found {current_columns}",
                         severity=Severity.ERROR,
                         position=Position(line=line_num + 1),
-                        context=line
+                        rule_id=self.id,
+                        context={"line": line}
                     ))
         
         if content_lines == 0:
             findings.append(Finding(
-                rule_id=self.id,
                 message="Empty table",
                 severity=Severity.WARNING,
                 position=Position(line=table_lines[0][0] + 1),
-                context=table_lines[0][1]
+                rule_id=self.id,
+                context={"line": table_lines[0][1]}
             ))
         
         return findings
 
-    def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
+    def check(self, document: Union[Dict[str, Any], List[Any], str]) -> List[Finding]:
         findings = []
         
         # Convert document to lines if it's not already
@@ -194,8 +202,9 @@ class TableStructureRule(Rule):
         else:
             lines = document
         
-        # Extract tables
-        tables = TableFormatRule.extract_table_lines(self, lines)
+        # Extract tables using TableFormatRule's method
+        format_rule = TableFormatRule()
+        tables = format_rule.extract_table_lines(lines)
         
         # Check each table
         for table in tables:
@@ -214,33 +223,50 @@ class TableContentRule(Rule):
     def __init__(self):
         super().__init__()
         self.id = "TABLE003"
-        self.cell_pattern = re.compile(r'([a-z]?)\|([^|]*)')
+        # Split line into cells first
+        self.cell_splitter = re.compile(r'(?:[al])?\|[^|]*')
+        # Then extract prefix and content from each cell
+        self.cell_parser = re.compile(r'([al]?)\|([^|]*)')
         self.list_pattern = re.compile(r'^\s*[\*\-]')
     
     @property
     def description(self) -> str:
         return "Checks for proper declaration of complex content in table cells"
 
-    def check_cell_content(self, cell_match: re.Match, line_num: int, context: str) -> Optional[Finding]:
-        """Check a single cell for complex content. Returns a finding or None."""
-        prefix = cell_match.group(1)
-        content = cell_match.group(2).strip()
+    def extract_cells(self, line: str) -> List[Tuple[str, str]]:
+        """Extract cells and their prefixes from a line.
+        Returns a list of (prefix, content) tuples.
+        """
+        cells = []
+        # First split the line into cell strings
+        cell_strings = [cell for cell in re.findall(r'(?:[al])?\|[^|]*', line)]
         
+        # Then parse each cell
+        for cell_str in cell_strings:
+            match = self.cell_parser.match(cell_str)
+            if match:
+                prefix = match.group(1)
+                content = match.group(2).strip()
+                cells.append((prefix, content))
+        
+        return cells
+
+    def check_cell_content(self, prefix: str, content: str, line_num: int, context: str) -> Optional[Finding]:
+        """Check a single cell for complex content. Returns a finding or None."""
         # Check for lists - only check if content starts with a list marker
         if content and self.list_pattern.match(content):
             if prefix not in ['a', 'l']:
                 return Finding(
-                    rule_id=self.id,
                     message="List in table cell requires 'a|' or 'l|' declaration",
                     severity=Severity.WARNING,
                     position=Position(line=line_num + 1),
-                    context=context
+                    rule_id=self.id,
+                    context={"line": context}
                 )
-        
         
         return None
 
-    def check(self, document: Union[Dict[str, Any], List[Any]]) -> List[Finding]:
+    def check(self, document: Union[Dict[str, Any], List[Any], str]) -> List[Finding]:
         findings = []
         
         # Convert document to lines if it's not already
@@ -251,30 +277,21 @@ class TableContentRule(Rule):
         else:
             lines = document
         
-        # Extract tables
-        tables = TableFormatRule.extract_table_lines(self, lines)
+        # Extract tables using TableFormatRule's method
+        format_rule = TableFormatRule()
+        tables = format_rule.extract_table_lines(lines)
         
         # Check each table
         for table in tables:
-            seen_list_cells = set()  # Track cells with list findings to avoid duplicates
-            
             for line_num, line in table[1:-1]:  # Skip table markers
                 if not line.strip():  # Skip empty lines
                     continue
                 
                 # Extract and check cells
-                for cell_match in self.cell_pattern.finditer(line):
-                    content = cell_match.group(2).strip()
-                    cell_pos = cell_match.start()
-                    
-                    # Skip if we've already reported a list finding for this cell
-                    if self.list_pattern.match(content) and cell_pos in seen_list_cells:
-                        continue
-                    
-                    finding = self.check_cell_content(cell_match, line_num, line)
+                cells = self.extract_cells(line)
+                for prefix, content in cells:
+                    finding = self.check_cell_content(prefix, content, line_num, line)
                     if finding:
                         findings.append(finding)
-                        if self.list_pattern.match(content):
-                            seen_list_cells.add(cell_pos)
         
         return findings

@@ -1,38 +1,42 @@
 # base.py - Base functionality for rules
 """
-Base functionality and registry for AsciiDoc linting rules
+Base functionality and registry for AsciiDoc linting rules.
+This module provides the core classes and functionality for the rule system.
 """
 
-from typing import Type, Dict, List, Optional
+from typing import Type, Dict, List, Optional, Any
 from enum import Enum
+from dataclasses import dataclass
 
 class Severity(Enum):
     """Severity levels for findings"""
-    INFO = "INFO"
-    WARNING = "WARNING"
     ERROR = "ERROR"
+    WARNING = "WARNING"
+    INFO = "INFO"
+    
+    def __str__(self) -> str:
+        return self.value
 
+@dataclass
 class Position:
     """Represents a position in a text file"""
-    def __init__(self, line: int, column: Optional[int] = None):
-        self.line = line
-        self.column = column
-
-    def __str__(self):
+    line: int
+    column: Optional[int] = None
+    
+    def __str__(self) -> str:
         if self.column is not None:
             return f"line {self.line}, column {self.column}"
         return f"line {self.line}"
 
+@dataclass
 class Finding:
     """Represents a rule violation finding"""
-    def __init__(self, rule_id: str, position: Position, message: str, 
-                 severity: Severity, context: Optional[str] = None):
-        self.rule_id = rule_id
-        self.position = position
-        self.message = message
-        self.severity = severity
-        self.context = context
-
+    message: str
+    severity: Severity
+    position: Position
+    rule_id: Optional[str] = None
+    context: Optional[Dict[str, Any]] = None
+    
     @property
     def line_number(self) -> int:
         """Backward compatibility for line number access"""
@@ -40,11 +44,32 @@ class Finding:
 
 class Rule:
     """Base class for all rules"""
-    id: str = ""
-    name: str = ""
-    description: str = ""
-    severity: Severity = Severity.WARNING
-
+    id: str = ""  # Should be overridden by subclasses
+    name: str = ""  # Should be overridden by subclasses
+    description: str = ""  # Should be overridden by subclasses
+    severity: Severity = Severity.WARNING  # Default severity
+    
+    @property
+    def rule_id(self) -> str:
+        """
+        Returns the rule ID. This is a compatibility property that returns
+        the same value as the id attribute.
+        """
+        return self.id
+    
+    def check(self, content: str) -> List[Finding]:
+        """
+        Check the content for rule violations.
+        Must be implemented by concrete rule classes.
+        
+        Args:
+            content: The content to check
+            
+        Returns:
+            List of findings
+        """
+        raise NotImplementedError("Rule must implement check method")
+    
     def check_line(self, line: str, line_number: int, context: List[str]) -> List[Finding]:
         """
         Check a single line for rule violations.
@@ -91,13 +116,13 @@ class Rule:
         return []
     
     def create_finding(self, line_number: int, message: str, 
-                      column: Optional[int] = None, context: Optional[str] = None) -> Finding:
+                      column: Optional[int] = None, context: Optional[Dict[str, Any]] = None) -> Finding:
         """Helper method to create a Finding object"""
         return Finding(
-            rule_id=self.id,
-            position=Position(line_number, column),
             message=message,
             severity=self.severity,
+            position=Position(line=line_number, column=column),
+            rule_id=self.rule_id,
             context=context
         )
 
@@ -107,7 +132,7 @@ class RuleRegistry:
     _rules: Dict[str, Type[Rule]] = {}
     
     @classmethod
-    def register_rule(cls, rule_class: Type[Rule]):
+    def register_rule(cls, rule_class: Type[Rule]) -> None:
         """Register a new rule class"""
         cls._rules[rule_class.__name__] = rule_class
     
