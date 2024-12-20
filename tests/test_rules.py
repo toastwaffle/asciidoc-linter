@@ -15,9 +15,9 @@ class TestSeverity(unittest.TestCase):
     
     def test_severity_values(self):
         """Test that Severity enum has correct values"""
-        self.assertEqual(Severity.INFO.value, "INFO")
-        self.assertEqual(Severity.WARNING.value, "WARNING")
-        self.assertEqual(Severity.ERROR.value, "ERROR")
+        self.assertEqual(Severity.INFO.value, "info")
+        self.assertEqual(Severity.WARNING.value, "warning")
+        self.assertEqual(Severity.ERROR.value, "error")
     
     def test_severity_comparison(self):
         """Test that Severity values can be compared"""

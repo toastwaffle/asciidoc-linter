@@ -10,9 +10,9 @@ from dataclasses import dataclass
 
 class Severity(Enum):
     """Severity levels for findings"""
-    ERROR = "ERROR"
-    WARNING = "WARNING"
-    INFO = "INFO"
+    ERROR = "error"
+    WARNING = "warning"
+    INFO = "info"
     
     def __str__(self) -> str:
         return self.value
@@ -44,7 +44,7 @@ class Finding:
 
 class Rule:
     """Base class for all rules"""
-    id: str = ""  # Should be overridden by subclasses
+    id: str = "BASE"  # Default ID, should be overridden by subclasses
     name: str = ""  # Should be overridden by subclasses
     description: str = ""  # Should be overridden by subclasses
     severity: Severity = Severity.WARNING  # Default severity

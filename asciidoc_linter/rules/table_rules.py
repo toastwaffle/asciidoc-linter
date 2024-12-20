@@ -144,7 +144,7 @@ class TableStructureRule(Rule):
     def __init__(self):
         super().__init__()
         self.id = "TABLE002"
-        self.cell_pattern = re.compile(r'\|([^|]*)')
+        self.cell_pattern = re.compile(r'\|(?!={3,}$)([^|]*)')
     
     @property
     def description(self) -> str:
@@ -152,7 +152,12 @@ class TableStructureRule(Rule):
 
     def count_columns(self, line: str) -> int:
         """Count the number of columns in a table row."""
-        return len(self.cell_pattern.findall(line))
+        # Skip table markers
+        if line.strip() == "|===":
+            return 0
+        # Count only content cells (not the first |)
+        cells = line.split("|")[1:]
+        return len(cells)
 
     def check_table_structure(self, table_lines: List[Tuple[int, str]]) -> List[Finding]:
         """Check table structure for consistency."""
@@ -165,7 +170,7 @@ class TableStructureRule(Rule):
             if not stripped:  # Skip empty lines
                 continue
             
-            if "|" in stripped:
+            if "|" in stripped and stripped != "|===":
                 content_lines += 1
                 current_columns = self.count_columns(stripped)
                 
@@ -223,10 +228,6 @@ class TableContentRule(Rule):
     def __init__(self):
         super().__init__()
         self.id = "TABLE003"
-        # Split line into cells first
-        self.cell_splitter = re.compile(r'(?:[al])?\|[^|]*')
-        # Then extract prefix and content from each cell
-        self.cell_parser = re.compile(r'([al]?)\|([^|]*)')
         self.list_pattern = re.compile(r'^\s*[\*\-]')
     
     @property
@@ -238,16 +239,23 @@ class TableContentRule(Rule):
         Returns a list of (prefix, content) tuples.
         """
         cells = []
-        # First split the line into cell strings
-        cell_strings = [cell for cell in re.findall(r'(?:[al])?\|[^|]*', line)]
+        # Skip table markers
+        if line.strip() == "|===":
+            return cells
+            
+        # Split line into cells
+        parts = line.split("|")[1:]  # Skip empty part before first |
         
-        # Then parse each cell
-        for cell_str in cell_strings:
-            match = self.cell_parser.match(cell_str)
-            if match:
-                prefix = match.group(1)
-                content = match.group(2).strip()
-                cells.append((prefix, content))
+        for part in parts:
+            part = part.strip()
+            # Check for prefixes
+            if part.startswith(("a", "l")) and len(part) > 1:
+                prefix = part[0]
+                content = part[1:].strip()
+            else:
+                prefix = ""
+                content = part
+            cells.append((prefix, content))
         
         return cells
 
@@ -284,14 +292,18 @@ class TableContentRule(Rule):
         # Check each table
         for table in tables:
             for line_num, line in table[1:-1]:  # Skip table markers
-                if not line.strip():  # Skip empty lines
+                if not line.strip() or line.strip() == "|===":  # Skip empty lines and table markers
                     continue
                 
                 # Extract and check cells
                 cells = self.extract_cells(line)
+                found_list = False  # Track if we've found a list in this line
                 for prefix, content in cells:
-                    finding = self.check_cell_content(prefix, content, line_num, line)
-                    if finding:
-                        findings.append(finding)
+                    if content and self.list_pattern.match(content):
+                        if not found_list:  # Only report the first list in a line
+                            finding = self.check_cell_content(prefix, content, line_num, line)
+                            if finding:
+                                findings.append(finding)
+                                found_list = True
         
         return findings
