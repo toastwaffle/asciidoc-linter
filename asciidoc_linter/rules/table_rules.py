@@ -155,9 +155,9 @@ class TableStructureRule(Rule):
         # Skip table markers
         if line.strip() == "|===":
             return 0
-        # Count only content cells (not the first |)
-        cells = line.split("|")[1:]
-        return len(cells)
+        # Count cells using regex to handle prefixes correctly
+        matches = self.cell_pattern.finditer(line)
+        return sum(1 for _ in matches)
 
     def check_table_structure(self, table_lines: List[Tuple[int, str]]) -> List[Finding]:
         """Check table structure for consistency."""
@@ -229,6 +229,12 @@ class TableContentRule(Rule):
         super().__init__()
         self.id = "TABLE003"
         self.list_pattern = re.compile(r'^\s*[\*\-]')
+        # Pattern to match cells with optional prefixes
+        # This pattern matches:
+        # 1. | followed by optional whitespace
+        # 2. Optional prefix (a or l) followed by |
+        # 3. Cell content up to the next | or end of string
+        self.cell_pattern = re.compile(r'\|\s*(?:([al])\|\s*)?([^|]*)')
     
     @property
     def description(self) -> str:
@@ -243,18 +249,11 @@ class TableContentRule(Rule):
         if line.strip() == "|===":
             return cells
             
-        # Split line into cells
-        parts = line.split("|")[1:]  # Skip empty part before first |
-        
-        for part in parts:
-            part = part.strip()
-            # Check for prefixes
-            if part.startswith(("a", "l")) and len(part) > 1:
-                prefix = part[0]
-                content = part[1:].strip()
-            else:
-                prefix = ""
-                content = part
+        # Use regex to find all cells with their prefixes
+        matches = self.cell_pattern.finditer(line)
+        for match in matches:
+            prefix = match.group(1) or ""  # Group 1 is the prefix (a or l)
+            content = match.group(2).strip()  # Group 2 is the cell content
             cells.append((prefix, content))
         
         return cells
@@ -291,19 +290,22 @@ class TableContentRule(Rule):
         
         # Check each table
         for table in tables:
+            found_list = False  # Track if we've found a list in this table
             for line_num, line in table[1:-1]:  # Skip table markers
                 if not line.strip() or line.strip() == "|===":  # Skip empty lines and table markers
                     continue
                 
                 # Extract and check cells
                 cells = self.extract_cells(line)
-                found_list = False  # Track if we've found a list in this line
                 for prefix, content in cells:
-                    if content and self.list_pattern.match(content):
-                        if not found_list:  # Only report the first list in a line
-                            finding = self.check_cell_content(prefix, content, line_num, line)
-                            if finding:
-                                findings.append(finding)
-                                found_list = True
+                    if not found_list:  # Only check for lists if we haven't found one yet in this table
+                        finding = self.check_cell_content(prefix, content, line_num, line)
+                        if finding:
+                            findings.append(finding)
+                            found_list = True  # Stop checking after first list finding in this table
+                            break  # Exit the cell loop
+                
+                if found_list:
+                    break  # Exit the line loop if we found a list
         
         return findings
