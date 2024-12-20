@@ -5,17 +5,30 @@ This module provides the core classes and functionality for the rule system.
 """
 
 from typing import Type, Dict, List, Optional, Any
-from enum import Enum
+from enum import Enum, auto
 from dataclasses import dataclass
 
-class Severity(Enum):
-    """Severity levels for findings"""
+class Severity(str, Enum):
+    """
+    Severity levels for findings.
+    Inherits from str to ensure consistent string representation.
+    All values are lowercase to ensure consistency.
+    """
     ERROR = "error"
     WARNING = "warning"
     INFO = "info"
     
     def __str__(self) -> str:
         return self.value
+    
+    def __eq__(self, other: object) -> bool:
+        """
+        Enhanced equality check that handles string comparison.
+        Allows comparison with strings in a case-insensitive way.
+        """
+        if isinstance(other, str):
+            return self.value.lower() == other.lower()
+        return super().__eq__(other)
 
 @dataclass
 class Position:
@@ -41,6 +54,17 @@ class Finding:
     def line_number(self) -> int:
         """Backward compatibility for line number access"""
         return self.position.line
+    
+    def __post_init__(self):
+        """
+        Ensure severity is always a Severity enum instance.
+        Converts string values to enum values if needed.
+        """
+        if isinstance(self.severity, str):
+            try:
+                self.severity = Severity(self.severity.lower())
+            except ValueError:
+                self.severity = Severity.WARNING  # Default to warning if invalid
 
 class Rule:
     """Base class for all rules"""
@@ -48,6 +72,16 @@ class Rule:
     name: str = ""  # Should be overridden by subclasses
     description: str = ""  # Should be overridden by subclasses
     severity: Severity = Severity.WARNING  # Default severity
+    
+    def __init__(self):
+        """
+        Initialize the rule and ensure severity is a proper enum value
+        """
+        if isinstance(self.severity, str):
+            try:
+                self.severity = Severity(self.severity.lower())
+            except ValueError:
+                self.severity = Severity.WARNING
     
     @property
     def rule_id(self) -> str:
