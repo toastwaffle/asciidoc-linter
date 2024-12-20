@@ -1,4 +1,4 @@
-// 10_quality_requirements.adoc - Quality Requirements
+# 10_quality_requirements.adoc - Quality Requirements
 
 == Quality Requirements
 
@@ -29,6 +29,11 @@
 |Launch linter
 |Ready in < 0.5 seconds
 |Medium
+
+|Table Processing
+|Process document with 100 tables
+|Complete in < 2 seconds
+|High
 |===
 
 ==== Reliability Scenarios
@@ -56,6 +61,16 @@
 |System low on memory
 |Graceful shutdown, save progress
 |Medium
+
+|Table Content Error
+|Invalid table structure
+|Clear error message with line numbers and context
+|High
+
+|List in Table
+|Undeclared list in table cell
+|Detect and report with context
+|High
 |===
 
 ==== Usability Scenarios
@@ -83,6 +98,38 @@
 |Look up rule details
 |Find explanation within 30 seconds
 |Medium
+
+|Table Error Context
+|Table formatting error
+|Show table context and specific cell
+|High
+|===
+
+==== Test Quality Scenarios
+
+[cols="1,2,2,1"]
+|===
+|Scenario |Stimulus |Response |Priority
+
+|Test Coverage
+|Add new feature
+|Maintain >90% coverage
+|High
+
+|Test Success Rate
+|Run test suite
+|>95% tests passing
+|High
+
+|Edge Case Coverage
+|Complex document structure
+|All edge cases tested
+|Medium
+
+|Performance Tests
+|Run benchmark suite
+|Complete in < 5 minutes
+|Medium
 |===
 
 === Quality Tree
@@ -98,36 +145,76 @@ Container(performance, "Performance", "Speed and Resources")
 Container(reliability, "Reliability", "Stability and Correctness")
 Container(usability, "Usability", "User Experience")
 Container(maintainability, "Maintainability", "Development")
-Container(security, "Security", "Safety")
+Container(testability, "Testability", "Quality Assurance")
 
 Rel(quality, performance, "")
 Rel(quality, reliability, "")
 Rel(quality, usability, "")
 Rel(quality, maintainability, "")
-Rel(quality, security, "")
+Rel(quality, testability, "")
 
 Container(speed, "Processing Speed", "< 1s/1000 lines")
 Container(memory, "Memory Usage", "< 100MB")
+Container(table_perf, "Table Processing", "< 2s/100 tables")
+
 Container(accuracy, "Rule Accuracy", "100%")
 Container(recovery, "Error Recovery", "Graceful")
+Container(table_acc, "Table Analysis", "Accurate")
+
 Container(messages, "Error Messages", "Clear & Actionable")
 Container(config, "Configuration", "Flexible")
+Container(context, "Error Context", "Detailed")
+
 Container(code, "Code Quality", "Maintainable")
 Container(docs, "Documentation", "Complete")
-Container(input, "Input Validation", "Strict")
-Container(output, "Output Safety", "Sanitized")
+Container(extensible, "Extensibility", "Plugin Support")
+
+Container(coverage, "Test Coverage", ">90%")
+Container(success, "Test Success", ">95%")
+Container(edge, "Edge Cases", "Covered")
 
 Rel(performance, speed, "")
 Rel(performance, memory, "")
+Rel(performance, table_perf, "")
+
 Rel(reliability, accuracy, "")
 Rel(reliability, recovery, "")
+Rel(reliability, table_acc, "")
+
 Rel(usability, messages, "")
 Rel(usability, config, "")
+Rel(usability, context, "")
+
 Rel(maintainability, code, "")
 Rel(maintainability, docs, "")
-Rel(security, input, "")
-Rel(security, output, "")
+Rel(maintainability, extensible, "")
+
+Rel(testability, coverage, "")
+Rel(testability, success, "")
+Rel(testability, edge, "")
 
 SHOW_LEGEND()
 @enduml
 ....
+
+=== Quality Metrics
+
+==== Test Quality
+* Test Coverage: >90% for all modules
+* Test Success Rate: >95%
+* Edge Case Coverage: All identified edge cases have tests
+
+==== Code Quality
+* Maintainability Index: >80
+* Cyclomatic Complexity: <10 per method
+* Documentation Coverage: >80%
+
+==== Performance
+* Processing Speed: <1ms per line
+* Memory Usage: <100MB
+* Table Processing: <20ms per table
+
+==== Reliability
+* False Positive Rate: <1%
+* Error Recovery: 100% of known error cases
+* Plugin Stability: No impact on core functionality

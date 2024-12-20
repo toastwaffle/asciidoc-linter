@@ -1,85 +1,27 @@
-// 09_architecture_decisions.adoc - Architecture Decisions
+# 09_architecture_decisions.adoc - Architecture Decisions
 
 == Architecture Decisions
 
+This chapter contains all architecture decisions for the AsciiDoc Linter project.
+Each decision is documented in a separate file and included here.
+
 === ADR 1: Rule Base Class Design
-
-==== Status
-Accepted
-
-==== Context
-We need a flexible and extensible way to implement different linting rules for AsciiDoc documents.
-
-==== Decision
-We will use an abstract base class `Rule` with a defined interface that all concrete rules must implement.
-
-==== Consequences
-* *Positive*
-** Consistent interface for all rules
-** Easy to add new rules
-** Clear separation of concerns
-** Simplified testing through common interface
-* *Negative*
-** Additional abstraction layer
-** Slight performance overhead
+include::decisions/ADR-001-rule-base-class.adoc[leveloffset=+2]
 
 === ADR 2: Finding Data Structure
-
-==== Status
-Accepted
-
-==== Context
-Rule violations need to be reported in a consistent and informative way.
-
-==== Decision
-We will use a `Finding` data class with fields for message, severity, position, rule ID, and context.
-
-==== Consequences
-* *Positive*
-** Structured error reporting
-** Rich context for violations
-** Consistent error format
-* *Negative*
-** More complex than simple string messages
-** Requires more memory for storing findings
+include::decisions/ADR-002-finding-data-structure.adoc[leveloffset=+2]
 
 === ADR 3: Rule Implementation Strategy
-
-==== Status
-Accepted
-
-==== Context
-Rules need to process AsciiDoc content and identify violations efficiently.
-
-==== Decision
-Each rule will process the content line by line, using regular expressions for pattern matching.
-
-==== Consequences
-* *Positive*
-** Simple implementation
-** Good performance for most cases
-** Easy to understand and maintain
-* *Negative*
-** Limited context awareness
-** May miss some complex patterns
-** Regular expressions can become complex
+include::decisions/ADR-003-rule-implementation-strategy.adoc[leveloffset=+2]
 
 === ADR 4: Test Strategy
+include::decisions/ADR-004-test-strategy.adoc[leveloffset=+2]
 
-==== Status
-Accepted
+=== ADR 5: Table Processing Strategy
+include::decisions/ADR-005-table-processing-strategy.adoc[leveloffset=+2]
 
-==== Context
-Rules need to be thoroughly tested to ensure reliable operation.
+=== ADR 6: Severity Standardization
+include::decisions/ADR-006-severity-standardization.adoc[leveloffset=+2]
 
-==== Decision
-Each rule will have its own test class with multiple test methods covering various scenarios.
-
-==== Consequences
-* *Positive*
-** High test coverage
-** Clear test organization
-** Easy to add new test cases
-* *Negative*
-** More maintenance effort
-** Longer test execution time
+=== ADR 7: Rule Registry Enhancement
+include::decisions/ADR-007-rule-registry-enhancement.adoc[leveloffset=+2]

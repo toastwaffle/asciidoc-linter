@@ -1,12 +1,45 @@
-// 11_technical_risks.adoc - Technical Risks
+# 11_technical_risks.adoc - Technical Risks
 
 == Technical Risks and Technical Debt
+
+=== Current Issues (December 2024)
+
+==== Test Failures
+* 3 failed tests in table processing
+* Issues with cell extraction and list detection
+* Impact on table validation reliability
+
+==== Coverage Gaps
+* rules.py: 0% coverage
+* reporter.py: 85% coverage
+* block_rules.py: 89% coverage
+
+==== Implementation Issues
+* Inconsistent severity case handling
+* Missing rule_id attribute in base class
+* Table content validation problems
 
 === Risk Analysis
 
 [cols="1,2,2,1,2"]
 |===
 |Risk |Description |Impact |Probability |Mitigation
+
+|Table Processing Errors
+|Table content validation unreliable
+|High
+|High
+|* Fix cell extraction
+* Improve list detection
+* Add comprehensive tests
+
+|Test Coverage Gaps
+|Critical modules lack tests
+|High
+|Medium
+|* Add tests for rules.py
+* Improve reporter coverage
+* Document test scenarios
 
 |Performance Degradation
 |Rule processing becomes slow with many rules
@@ -49,8 +82,18 @@
 |===
 |Area |Description |Impact |Priority
 
+|Table Processing
+|Cell extraction and list detection issues
+|High
+|High
+
 |Test Coverage
-|Some edge cases not covered
+|rules.py and reporter.py need tests
+|High
+|High
+
+|Core Architecture
+|Inconsistent severity handling
 |Medium
 |High
 
@@ -70,6 +113,38 @@
 |Low
 |===
 
+==== Implementation Debt
+
+[cols="1,2,1,1"]
+|===
+|Component |Issue |Impact |Priority
+
+|TableContentRule
+|Cell extraction incorrect
+|High
+|High
+
+|TableContentRule
+|List detection problems
+|High
+|High
+
+|Rule Base Class
+|Missing rule_id attribute
+|Medium
+|High
+
+|Severity Handling
+|Inconsistent case usage
+|Medium
+|High
+
+|rules.py
+|No test coverage
+|High
+|High
+|===
+
 ==== Planned Improvements
 
 [plantuml]
@@ -80,23 +155,23 @@
 Container(current, "Current State", "Technical Debt")
 Container(target, "Target State", "Improved System")
 
+Container(table, "Table Processing", "Unreliable")
+Container(table_target, "Table Processing", "Robust")
+
 Container(tests, "Test Coverage", "90%")
 Container(tests_target, "Test Coverage", "95%")
+
+Container(arch, "Core Architecture", "Inconsistent")
+Container(arch_target, "Core Architecture", "Standardized")
 
 Container(docs, "Documentation", "Basic")
 Container(docs_target, "Documentation", "Comprehensive")
 
-Container(errors, "Error Handling", "Basic")
-Container(errors_target, "Error Handling", "Advanced")
-
-Container(config, "Configuration", "Limited")
-Container(config_target, "Configuration", "Flexible")
-
 Rel(current, target, "Improvement Plan")
+Rel(table, table_target, "Fix Processing")
 Rel(tests, tests_target, "Increase Coverage")
+Rel(arch, arch_target, "Standardize")
 Rel(docs, docs_target, "Improve Docs")
-Rel(errors, errors_target, "Enhanced Handling")
-Rel(config, config_target, "More Options")
 
 SHOW_LEGEND()
 @enduml
@@ -117,6 +192,8 @@ Container(high_impact, "High Impact", "")
 Container(med_impact, "Medium Impact", "")
 Container(low_impact, "Low Impact", "")
 
+Container(table, "Table", "Processing")
+Container(coverage, "Test", "Coverage")
 Container(perf, "Performance", "Degradation")
 Container(memory, "Memory", "Leaks")
 Container(false_pos, "False", "Positives")
@@ -132,6 +209,36 @@ Rel(low_prob, high_impact, "Moderate")
 Rel(low_prob, med_impact, "Minor")
 Rel(low_prob, low_impact, "Negligible")
 
+Rel(table, high_prob, "")
+Rel(table, high_impact, "")
+Rel(coverage, med_prob, "")
+Rel(coverage, high_impact, "")
+Rel(perf, med_prob, "")
+Rel(perf, high_impact, "")
+Rel(memory, low_prob, "")
+Rel(memory, high_impact, "")
+Rel(false_pos, high_prob, "")
+Rel(false_pos, med_impact, "")
+Rel(plugins, med_prob, "")
+Rel(plugins, med_impact, "")
+
 SHOW_LEGEND()
 @enduml
 ....
+
+=== Mitigation Strategy
+
+==== Phase 1: Critical Issues (1-2 weeks)
+1. Fix table processing
+2. Add missing tests
+3. Standardize severity handling
+
+==== Phase 2: Important Improvements (2-3 weeks)
+1. Improve documentation
+2. Enhance error handling
+3. Add configuration options
+
+==== Phase 3: Long-term Stability (3-4 weeks)
+1. Performance optimization
+2. Memory management
+3. Plugin architecture improvements
