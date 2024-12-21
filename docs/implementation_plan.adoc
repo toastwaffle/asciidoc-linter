@@ -1,11 +1,12 @@
 # implementation_plan.adoc - Implementation plan for AsciiDoc Linter
+
 = AsciiDoc Linter Implementation Plan
 :toc:
 :toc-placement: preamble
 :sectanchors:
 :sectlinks:
 :last-update-label: Zuletzt aktualisiert
-:last-update: 2024-12-20
+:last-update: 2024-12-21
 
 == Current Status Analysis
 
@@ -15,12 +16,12 @@
 ** HTML reports generating correctly
 ** Source code detection working
 * ✅ Test Infrastructure working
-** 130 tests implemented
-** 130 tests passing (100%)
+** 136 tests implemented (↑6 new tests)
+** 136 tests passing (100%)
 ** 0 failures in latest run
-* ✅ Overall test coverage at 94%
-** 709 statements total
-** 43 statements not covered
+* ✅ Overall test coverage at 93%
+** 710 statements total
+** 48 statements not covered
 ** Most modules >90% coverage
 
 === Module Coverage Status
@@ -29,6 +30,7 @@
 * ✅ image_rules.py
 * ✅ parser.py
 * ✅ __init__.py files
+* ✅ rules.py (NEW)
 
 ==== Very Good Coverage (95-99%)
 * ✅ whitespace_rules.py (98%)
@@ -43,7 +45,7 @@
 * ✅ base.py (92%)
 
 ==== Critical Coverage Issues
-* ❌ rules.py (0%)
+* ❌ concrete_rules.py (0%)
 
 === Fixed Issues
 
@@ -64,6 +66,11 @@
 * ✅ Table Structure Rule
 ** Fixed column counting
 ** Fixed empty table handling
+
+==== Rules Module Issues (NEW)
+* ✅ Import structure fixed
+* ✅ Test coverage improved
+* ✅ Documentation updated
 
 == Updated Implementation Plan
 
@@ -97,12 +104,15 @@
 === Phase 2: Coverage Improvements (2-3 days)
 
 ==== Step 1: Critical Coverage (Priority: High)
-* Fix rules.py coverage:
+* ✅ Fix rules.py coverage:
+** ✅ Add missing tests
+** ✅ Review and update implementation
+* Fix concrete_rules.py coverage:
 ** Add missing tests
 ** Review and update implementation
 * Implementation tasks:
-** Create test_rules.py
-** Update rules.py implementation
+** ✅ Create test_rules.py
+** Create test_concrete_rules.py
 
 ==== Step 2: Module Coverage (Priority: Medium)
 * Improve reporter.py coverage:
@@ -159,7 +169,8 @@
 |Critical Coverage
 |1 day
 |High
-|Not Started
+|✅ Done for rules.py
+In Progress for concrete_rules.py
 
 |2
 |Module Coverage
@@ -177,7 +188,7 @@
 |Documentation
 |1 day
 |Medium
-|Not Started
+|In Progress
 |===
 
 == Next Steps (Prioritized)
@@ -185,8 +196,9 @@
 1. ✅ Fix Severity implementation
 2. ✅ Fix table cell extraction
 3. ✅ Fix table column counting
-4. Fix Rule base class (rule_id)
-5. Add tests for rules.py
+4. ✅ Add tests for rules.py
+5. Fix Rule base class (rule_id)
+6. Add tests for concrete_rules.py
 
 == Success Criteria
 
@@ -212,5 +224,6 @@
 
 * ✅ Severity implementation fixed
 * ✅ Table processing fixed
-* Priority now on rule_id implementation
+* ✅ Rules module test coverage improved
+* Priority now on concrete_rules.py coverage and rule_id implementation
 * Consider adding performance tests
