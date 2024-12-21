@@ -71,7 +71,7 @@ if __name__ == '__main__':
         # If tests were successful, copy reports to docs
         if result.returncode == 0:
             try:
-                docs_dir = Path('docs/test-results')  # Changed path to match project structure
+                docs_dir = Path('build/microsite/output/test-results')  # Changed path to match project structure
                 final_test, final_cov = copy_reports(test_report, docs_dir)
                 print(f"\nReports copied to docs:")
                 print(f"Test report: {final_test}")

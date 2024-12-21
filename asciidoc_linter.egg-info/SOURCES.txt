@@ -10,7 +10,6 @@ run_tests.py.meta
 setup.py
 setup.py.meta
 .github/workflows/gh-pages.yml
-.github/workflows/run-tests.yml
 asciidoc_linter/.meta
 asciidoc_linter/__init__.py
 asciidoc_linter/__init__.py.meta
@@ -39,6 +38,7 @@ asciidoc_linter/rules/base.py.meta
 asciidoc_linter/rules/base_rules.py
 asciidoc_linter/rules/base_rules.py.meta
 asciidoc_linter/rules/block_rules.py
+asciidoc_linter/rules/concrete_rules.py
 asciidoc_linter/rules/heading_rules.py
 asciidoc_linter/rules/heading_rules.py.meta
 asciidoc_linter/rules/image_rules.py
@@ -96,8 +96,15 @@ tests/__init__.py
 tests/__init__.py.meta
 tests/test.adoc
 tests/test.adoc.meta
+tests/test_base.py
+tests/test_base_rules.py
+tests/test_cli.py
 tests/test_linter.py
 tests/test_reporter.py
+tests/test_rule_registry.py
+tests/test_rules.py
+tests/test_rules_imports.py
+tests/test_table_rules.py
 tests/rules/.meta
 tests/rules/__init__.py
 tests/rules/__init__.py.meta
