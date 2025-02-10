@@ -3,26 +3,25 @@
 Main linter module that processes AsciiDoc files and applies rules
 """
 
-from typing import List, Optional
+from typing import List
 from pathlib import Path
 
+from .rules.base import Finding, Severity
 from .rules.heading_rules import (
     HeadingFormatRule,
     HeadingHierarchyRule,
-    MultipleTopLevelHeadingsRule
+    MultipleTopLevelHeadingsRule,
 )
-from .rules.block_rules import (
-    UnterminatedBlockRule,
-    BlockSpacingRule
-)
+from .rules.block_rules import UnterminatedBlockRule, BlockSpacingRule
 from .rules.whitespace_rules import WhitespaceRule
 from .rules.image_rules import ImageAttributesRule
 from .parser import AsciiDocParser
-from .reporter import LintReport, LintError, ConsoleReporter, Reporter
+from .reporter import LintReport
+
 
 class AsciiDocLinter:
     """Main linter class that coordinates parsing and rule checking"""
-    
+
     def __init__(self):
         self.parser = AsciiDocParser()
         self.rules = [
@@ -32,42 +31,43 @@ class AsciiDocLinter:
             UnterminatedBlockRule(),
             BlockSpacingRule(),
             WhitespaceRule(),
-            ImageAttributesRule()
+            ImageAttributesRule(),
         ]
-        self.reporter = ConsoleReporter()  # Default reporter
-    
-    def set_reporter(self, reporter: Reporter) -> None:
-        """Set the reporter to use for output formatting"""
-        self.reporter = reporter
-    
-    def lint(self, content: str, source: Optional[str] = None) -> str:
+
+    def lint(self, file_paths: List[str]) -> LintReport:
         """
         Lint content and return formatted output using the current reporter
-        
+
         This is the main entry point used by the CLI
         """
-        report = self.lint_string(content, source)
-        return self.reporter.format_report(report)
-    
-    def lint_file(self, file_path: Path) -> LintReport:
+        all_findings = []
+        for file_path in file_paths:
+            all_findings.extend(self.lint_file(file_path))
+        return LintReport(all_findings)
+
+    def lint_file(self, file_path: Path) -> List[Finding]:
         """Lint a single file and return a report"""
         try:
-            content = file_path.read_text()
-            return self.lint_string(content, str(file_path))
+            return [
+                finding.set_file(str(file_path))
+                for finding in self.lint_string(Path(file_path).read_text())
+            ]
         except Exception as e:
-            return LintReport([LintError(str(file_path), 0, f"Error reading file: {e}")])
-    
-    def lint_string(self, content: str, source: Optional[str] = None) -> LintReport:
+            return [
+                Finding(
+                    message=f"Error linting file: {e}",
+                    severity=Severity.ERROR,
+                    file=str(file_path),
+                )
+            ]
+
+    def lint_string(self, content: str) -> List[Finding]:
         """Lint a string and return a report"""
         document = self.parser.parse(content)
-        errors = []
-        
+        findings = []
+
         for rule in self.rules:
-            rule_errors = rule.check(document)
-            errors.extend(rule_errors)
-        
-        if source:
-            for error in errors:
-                error.file = source
-        
-        return LintReport(errors)
+            rule_findings = rule.check(document)
+            findings.extend(rule_findings)
+
+        return findings
