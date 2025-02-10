@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="de">
+<head>
+    
+    <!-- sourceuri: readme/README.html -->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="jbake" name="generator">
+    <meta content="INDEX, FOLLOW" name="ROBOTS">
+
+    <title>README.adoc</title>
+    <meta content="docToolchain" property="og:title">
+    <meta content="build your dev docs the easy way..." property="og:description">
+    <meta content="website" property="og:type">
+    <meta content="docToolchain" property="og:site_name">
+    <meta content="docToolchain" itemprop="name">
+    <meta content="build your dev docs the easy way..." itemprop="description">
+    <meta content="summary" name="twitter:card">
+    <meta content="docToolchain" name="twitter:title">
+    <meta content="build your dev docs the easy way..." name="twitter:description">
+
+    <link as="style"
+        href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+        rel="preload">
+    <link href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+        integrity=""
+        rel="stylesheet">
+    <link href="../css/asciidoctor.css" rel="stylesheet">
+    <link href="../css/prettify.css" rel="stylesheet">
+
+    <!-- favicon generated with https://www.favicon-generator.org/ -->
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="../apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <style>
+    div.bg-light {
+        background-color: rgba(127, 180, 224, 0.3) !important;
+    }
+
+    /* for blog posts */
+    span.blogtag {
+        border-radius: 10px;
+        background-color: #30638E;
+        color: white;
+        padding: 5px 10px;
+    }
+
+    span.blogblogtag a {
+        color: white;
+        padding: 0
+    }
+
+    span.blogtag span {
+        margin-left: 10px;
+        border-radius: 10px;
+        background-color: white;
+        color: #30638E;
+    }
+
+    div.td-toc {
+        height: calc(100vh - 5rem) !important;
+    }
+
+    div#toctitle {
+        display: none
+    }
+
+    #td-section-nav {
+        max-height: calc(100vh - 4rem);
+        font-size: smaller;
+        line-height: 1.1;
+    }
+
+    .td-page-meta {
+        font-size: smaller;
+        line-height: 1.1;
+    }
+
+    #td-section-nav ul.td-sidebar-nav__section {
+        padding-left: 0;
+    }
+
+    span.navbar-logo {
+        padding-right: 1.5em;
+    }
+
+    .match {
+        font-size: smaller;
+    }
+
+    .admonitionblock td.icon .fa:before {
+        font-size: xxx-large;
+    }
+    </style>
+
+    <style>
+    div.openblock.primary div.content, div.openblock.secondary div.content {
+        border: 1px solid #7a2518;
+        padding: 5px;
+    }
+
+    div.openblock.primary div.content div.content, div.openblock.secondary div.content div.content {
+        border: 0 solid #7a2518;
+        padding: 0;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .switch {
+        border-width: 1px 1px 0 1px;
+        border-style: solid;
+        border-color: #7a2518;
+        display: inline-block;
+    }
+
+    .switch--item {
+        padding: 2px 10px;
+        background-color: #ffffff;
+        color: #7a2518;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .switch--item:not(:first-child) {
+        border-width: 0 0 0 1px;
+        border-style: solid;
+        border-color: #7a2518;
+    }
+
+    .switch--item.selected {
+        background-color: #7a2519;
+        color: #ffffff;
+    }
+    </style>
+
+    <!-- copy-n-paste.js -->
+    <style>
+        div.listingblock {
+            position: relative;
+        }
+        div.listingblock > span.icon {
+            position: absolute;
+            top: 2px;
+            right: 6px;
+            visibility: hidden;
+            z-index: 2;
+            cursor: pointer;
+        }
+        div.listingblock:hover > span.icon {
+            visibility: visible;
+        }
+        div.listingblock div.content pre {
+            margin: 0;
+        }
+    </style>
+    <style>
+        .td-sidebar-nav__section {
+            padding-left: 9px;
+        }
+        details {
+            margin-left: 10px;
+        }
+        summary {
+            cursor: pointer;
+            padding-left: 10px; /* Erhöhter linker Padding für den Pfeil */
+            list-style: none;
+            position: relative; /* Für absolute Positionierung des Pfeils */
+        }
+        summary::before {
+            content: '>';
+            position: absolute;
+            left: 10px; /* Position des Pfeils */
+            top: 50%;
+            transform: translateY(-50%) translateX(-120%);
+            transition: transform 0.3s;
+        }
+        details[open] > summary::before {
+            transform: translateY(-50%) translateX(-120%) rotate(90deg);
+        }
+    </style>
+</head>
+
+<body onload="prettyPrint()" class="td-section">
+<header>
+	
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+    <a class="navbar-brand" href="../index.html">
+        <span class="navbar-logo"><img src="../images/doctoolchain-logo-blue.png" alt="docToolchain" width="32px" /></span><span
+            class="font-weight-bold">AsciiDoc-Linter</span>
+    </a>
+    <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+        <ul class="navbar-nav mt-2 mt-lg-0">
+    <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link " href="../test-results/test-report.html"><span>test-results</span></a>
+            </li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link " href="../arc42/index.html"><span>arc42</span></a>
+            </li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link " href="../manual/index.html"><span>manual</span></a>
+            </li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
+            </li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link active" href="../readme/README.html"><span>readme</span></a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="navbar-nav d-none d-lg-block" >
+        <form action="../search.html">
+        <input aria-label="Search this site…" autocomplete="off" class="form-control td-search-input"
+               placeholder=" Search this site…" type="search" name="q">
+        </form>
+    </div>
+</nav>
+
+</header>
+<div class="container-fluid td-outer">
+	<div class="td-main">
+		<div class="row flex-xl-nowrap">
+			<div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+				<div class="td-sidebar__inner" id="td-sidebar-menu" >
+					
+
+        <form class="td-sidebar__search d-flex align-items-center d-lg-none" action="../search.html">
+
+            <input aria-label="Search this site…" name="q" autocomplete="off" class="form-control td-search-input"
+                   placeholder=" Search this site…" type="search">
+
+
+            <button aria-controls="td-docs-nav" aria-expanded="false"
+                    aria-label="Toggle section navigation" class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" data-target="#td-section-nav"
+                    data-toggle="collapse" type="button">
+            </button>
+        </form>
+
+        <nav aria-label="Submenu" class="collapse td-sidebar-nav" id="td-section-nav" >
+
+            <ul class="td-sidebar-nav__section">
+                <li class="td-sidebar-nav__section-title">
+                    <span class="align-left pl-0 pr-2 pt-2 active td-sidebar-link td-sidebar-link__section">readme</span>
+                </li>
+                <li>
+                  <ul>
+                      <li class="collapse show" id="docs">
+                          
+                        <ul class="td-sidebar-nav__section ul-0">
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section active"
+                                   href="../readme/README.html" title="README.adoc">README.adoc</a>
+                                
+                            </li>
+                        </ul>
+                      </li>
+                  </ul>
+                <li>
+        </nav>
+
+				</div>
+			</div>
+			<div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+				<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+					
+
+        <a href="##git-repo-url##/readme/README.adoc"
+           target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
+
+
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27README.adoc%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/readme/README.adoc%0A%23branch:%20main" target="_blank"><i
+                class="fab fa-github fa-fw"></i> Create an issue</a>
+
+        
+
+        <hr />
+
+        <div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel0">
+<li><a href="#_readme_adoc_project_documentation">README.adoc - Project documentation</a></li>
+<li><a href="#_asciidoc_linter">AsciiDoc Linter</a>
+<ul class="sectlevel1">
+<li><a href="#_about">About</a></li>
+<li><a href="#_features">Features</a>
+<ul class="sectlevel2">
+<li><a href="#_implemented_rules">Implemented Rules</a></li>
+<li><a href="#_planned_rules">Planned Rules</a></li>
+</ul>
+</li>
+<li><a href="#_installation">Installation</a></li>
+<li><a href="#_usage">Usage</a>
+<ul class="sectlevel2">
+<li><a href="#_basic_usage">Basic Usage</a></li>
+<li><a href="#_output_formats">Output Formats</a></li>
+<li><a href="#_example_output">Example Output</a></li>
+</ul>
+</li>
+<li><a href="#_development">Development</a>
+<ul class="sectlevel2">
+<li><a href="#_current_status">Current Status</a></li>
+<li><a href="#_running_tests">Running Tests</a></li>
+<li><a href="#_project_structure">Project Structure</a></li>
+</ul>
+</li>
+<li><a href="#_contributing">Contributing</a>
+<ul class="sectlevel2">
+<li><a href="#_development_guidelines">Development Guidelines</a></li>
+</ul>
+</li>
+<li><a href="#_license">License</a></li>
+<li><a href="#_acknowledgments">Acknowledgments</a></li>
+<li><a href="#_roadmap">Roadmap</a></li>
+<li><a href="#_contact">Contact</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+				</div>
+			</div>
+			<main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+				    <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+        <ol class="breadcrumb spb-1">
+            <!--li aria-current="page" class="breadcrumb-item active">
+                <a href="https://example.docsy.dev/docs/">Documentation</a>
+            </li-->
+
+        </ol>
+    </nav>
+
+
+    <div class="td-content">
+        <p>
+            
+<h1 id="_readme_adoc_project_documentation" class="sect0">README.adoc - Project documentation</h1>
+
+<h1 id="_asciidoc_linter" class="sect0">AsciiDoc Linter</h1>
+<div class="paragraph">
+<p><span class="image"><a class="image" href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a></span>
+<span class="image"><img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python Version"></span>
+<span class="image"><img src="https://img.shields.io/badge/test&#8212;&#8203;coverage-95%25-green.svg" alt="Test Coverage"></span>
+<span class="image"><img src="https://img.shields.io/badge/tests-97%25-green.svg" alt="Test Success Rate"></span></p>
+</div>
+<div class="paragraph">
+<p>A Python-based linter for AsciiDoc files that helps maintain consistent documentation quality and style. Part of the docToolchain project.</p>
+</div>
+<div class="sect1">
+<h2 id="_about">About</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AsciiDoc Linter is a command-line tool that checks your AsciiDoc files for common issues and style violations. It helps maintain consistent documentation by enforcing rules for heading structure, formatting, whitespace, and image usage.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This project is part of docToolchain (<a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a>), a collection of documentation tools and best practices.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_features">Features</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_implemented_rules">Implemented Rules</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Rule ID</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Severity</th>
+<th class="tableblock halign-left valign-top">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HEAD001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check for proper heading hierarchy (no skipping levels)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HEAD002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify heading format (spacing and capitalization)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR/WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HEAD003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Detect multiple top-level headers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BLOCK001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check for unterminated blocks (listing, example, sidebar, etc.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BLOCK002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify proper spacing around blocks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WS001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Check whitespace usage (blank lines, list markers, tabs)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IMG001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Verify image attributes and file references</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING/ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Stable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TABLE001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table formatting consistency</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARNING/ERROR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">⚠️ Beta</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_planned_rules">Planned Rules</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>TABLE002: Table content validation</p>
+</li>
+<li>
+<p>LINK001: Broken internal references</p>
+</li>
+<li>
+<p>FMT001: Markdown-compatible styles detection</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">Installation</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Clone the repository
+git clone https://github.com/docToolchain/asciidoc-linter.git
+
+# Navigate to the project directory
+cd asciidoc-linter
+
+# Install the package
+pip install .</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usage">Usage</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_basic_usage">Basic Usage</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Check a single file
+asciidoc-lint document.adoc
+
+# Check multiple files
+asciidoc-lint doc1.adoc doc2.adoc
+
+# Check with specific output format
+asciidoc-lint --format json document.adoc</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_output_formats">Output Formats</h3>
+<div class="paragraph">
+<p>The linter supports three output formats:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>console</code> (default): Human-readable output with color</p>
+</li>
+<li>
+<p><code>plain</code>: Human-readable output without color</p>
+</li>
+<li>
+<p><code>json</code>: Machine-readable JSON format</p>
+</li>
+<li>
+<p><code>html</code>: HTML report format</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_output">Example Output</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code>Checking file: document.adoc
+
+ERROR: Heading level skipped: found h3 after h1 (line 15)
+  === Advanced Topics
+
+WARNING: Heading should start with uppercase letter (line 23)
+  == introduction to concepts
+
+ERROR: Unterminated listing block starting (line 45)
+  ----
+
+WARNING: Block should be preceded by a blank line (line 67)
+  ----
+
+ERROR: Multiple top-level headings found (line 30)
+  First heading at line 1: 'Document Title'
+
+WARNING: Missing alt text for image: diagram.png (line 80)
+  image::diagram.png[]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_development">Development</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_current_status">Current Status</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Test Coverage: 94%</p>
+</li>
+<li>
+<p>Test Success Rate: 100% (127/127 tests passing)</p>
+</li>
+<li>
+<p>Known Issues:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Table content validation needs improvement</p>
+</li>
+<li>
+<p>Rules.py requires test coverage</p>
+</li>
+<li>
+<p>Reporter module needs additional tests</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_tests">Running Tests</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Run all tests
+python -m pytest
+
+# Run specific test file
+python -m pytest tests/rules/test_heading_rules.py
+
+# Run tests with coverage
+python run_tests_html.py</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_project_structure">Project Structure</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code>asciidoc-linter/
+├── asciidoc_linter/
+│   ├── __init__.py
+│   ├── cli.py
+│   ├── linter.py
+│   ├── parser.py
+│   ├── reporter.py
+│   └── rules/
+│       ├── __init__.py
+│       ├── base.py
+│       ├── base_rules.py
+│       ├── block_rules.py
+│       ├── heading_rules.py
+│       ├── image_rules.py
+│       ├── table_rules.py
+│       └── whitespace_rules.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_base.py
+│   ├── test_cli.py
+│   ├── test_linter.py
+│   ├── test_reporter.py
+│   └── rules/
+│       ├── test_block_rules.py
+│       ├── test_heading_rules.py
+│       ├── test_image_rules.py
+│       ├── test_table_rules.py
+│       └── test_whitespace_rules.py
+├── docs/
+│   ├── arc42/
+│   ├── manual/
+│   ├── test-results/
+│   ├── requirements.adoc
+│   └── implementation_plan.adoc
+├── README.adoc
+└── run_tests.py</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_contributing">Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.</p>
+</div>
+<div class="sect2">
+<h3 id="_development_guidelines">Development Guidelines</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Write tests for new rules</p>
+</li>
+<li>
+<p>Update documentation</p>
+</li>
+<li>
+<p>Follow Python code style guidelines</p>
+</li>
+<li>
+<p>Add appropriate error messages and context</p>
+</li>
+<li>
+<p>Ensure test coverage remains above 90%</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_license">License</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This project is licensed under the MIT License - see the LICENSE file for details.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_acknowledgments">Acknowledgments</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Part of the docToolchain project (<a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a>)</p>
+</li>
+<li>
+<p>Inspired by various linting tools and the need for better AsciiDoc quality control</p>
+</li>
+<li>
+<p>Thanks to the AsciiDoc community for their excellent documentation and tools</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_roadmap">Roadmap</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Phase 1 (Current)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>✅ Basic heading rules</p>
+</li>
+<li>
+<p>✅ Block structure rules</p>
+</li>
+<li>
+<p>✅ Whitespace rules</p>
+</li>
+<li>
+<p>✅ Image validation</p>
+</li>
+<li>
+<p>⚠️ Table validation</p>
+</li>
+<li>
+<p>⏳ Configuration system</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Phase 2 (Next)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>🔲 Fix table content validation</p>
+</li>
+<li>
+<p>🔲 Improve test coverage</p>
+</li>
+<li>
+<p>🔲 Add link checking</p>
+</li>
+<li>
+<p>🔲 Add format rules</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Phase 3 (Future)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>🔲 IDE integration</p>
+</li>
+<li>
+<p>🔲 Git pre-commit hooks</p>
+</li>
+<li>
+<p>🔲 Custom rule development</p>
+</li>
+<li>
+<p>🔲 Performance optimization</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_contact">Contact</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Project Homepage: <a href="https://github.com/docToolchain/asciidoc-linter" class="bare">https://github.com/docToolchain/asciidoc-linter</a></p>
+</li>
+<li>
+<p>Issue Tracker: <a href="https://github.com/docToolchain/asciidoc-linter/issues" class="bare">https://github.com/docToolchain/asciidoc-linter/issues</a></p>
+</li>
+<li>
+<p>docToolchain Homepage: <a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+        </p>
+
+        <style>
+.feedback--answer {
+    display: inline-block;
+}
+
+.feedback--answer-no {
+    margin-left: 1em;
+}
+
+.feedback--response {
+    display: none;
+    margin-top: 1em;
+}
+
+.feedback--response__visible {
+    display: block;
+}
+</style>
+
+<div class="d-print-none">
+    <h2 class="feedback--title">Feedback</h2>
+    <p class="feedback--question">Was this page helpful?</p>
+    <button class="feedback--answer feedback--answer-yes">Yes</button>
+    <button class="feedback--answer feedback--answer-no">No</button>
+    <p class="feedback--response feedback--response-yes">
+        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27README.adoc%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:readme/README.adoc">tell us
+    how we can improve</a>.
+    </p>
+    <p class="feedback--response feedback--response-no">
+        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27README.adoc%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:readme/README.adoc">tell
+    us how we can improve</a>.
+    </p>
+</div>
+<script>
+    const yesButton = document.querySelector('.feedback--answer-yes');
+    const noButton = document.querySelector('.feedback--answer-no');
+    const yesResponse = document.querySelector('.feedback--response-yes');
+    const noResponse = document.querySelector('.feedback--response-no');
+    const disableButtons = () => {
+        yesButton.disabled = true;
+        noButton.disabled = true;
+    };
+    const sendFeedback = (value) => {
+        if (typeof ga !== 'function') return;
+        const args = {
+            command: 'send',
+            hitType: 'event',
+            category: 'Helpful',
+            action: 'click',
+            label: window.location.pathname,
+            value: value
+        };
+        ga(args.command, args.hitType, args.category, args.action, args.label, args.value);
+    };
+    yesButton.addEventListener('click', () => {
+        yesResponse.classList.add('feedback--response__visible');
+        disableButtons();
+        sendFeedback(1);
+    });
+    noButton.addEventListener('click', () => {
+        noResponse.classList.add('feedback--response__visible');
+        disableButtons();
+        sendFeedback(0);
+    });
+</script>
+
+
+        <br>
+
+        <!--div class="text-muted mt-5 pt-3 border-top">Last modified July 3, 2019: <a
+                href="https://github.com/google/docsy-example/commit/d6aa89c8b24089d7e6741030864eff209465e896">Added
+            links to user guide repo (d6aa89c)</a>
+        </div-->
+    </div>
+
+
+			</main>
+
+		</div>
+	</div>
+
+
+	
+    <!--footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">&copy; 2020 | based on <a href="https://arc42.org">arc42 7.0</a> | mixed with <a href="http://getbootstrap.com/">Bootstrap v5.0.0-beta</a> | Baked with <a href="http://jbake.org">JBake v2.6.7</a></span>
+        </div>
+    </footer-->
+
+    <footer class="bg-dark py-5 row d-print-none">
+        <div class="container-fluid mx-sm-5">
+            <div class="row">
+                <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+
+
+                    <ul class="list-inline mb-0">
+                        
+                        <li aria-label="User mailing list" class="list-inline-item mx-2 h3" data-original-title="User mailing list" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="mailto:##footer-email##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        </li>
+                        
+                        
+                        <li aria-label="Twitter" class="list-inline-item mx-2 h3" data-original-title="Twitter" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##twitter-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        
+                        
+                        <li aria-label="Stack Overflow" class="list-inline-item mx-2 h3" data-original-title="Stack Overflow" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##Stackoverflow-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-stack-overflow"></i>
+                            </a>
+                        </li>
+                        
+                    </ul>
+
+
+                </div>
+                <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+
+
+                    <ul class="list-inline mb-0">
+
+                        
+                        <li aria-label="GitHub" class="list-inline-item mx-2 h3" data-original-title="GitHub" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##Github-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </li>
+                        
+
+                        
+                        <li aria-label="Slack" class="list-inline-item mx-2 h3" data-original-title="Slack" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##Slack-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-slack"></i>
+                            </a>
+                        </li>
+                        
+
+
+                    </ul>
+
+
+                </div>
+                <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+
+                        <small class="text-white">built with <a href="https://doctoolchain.org">docToolchain</a> and <a href="https://jbake.org">jBake</a> <br /> theme: <a href="https://www.docsy.dev/">docsy</a></small>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+
+    <script src="../js/main.min.b5fc1b29d2465835844254bd4d804738eaf24c0cec53009b4c6899989be55a47.js"></script>
+    <script src="../js/blocks.js" ></script>
+    <script src="../js/prettify.js"></script>
+    <script src="../js/copy-n-paste.js"></script>
+    <script src="../js/submenucollapse.js"></script>
+
+
+</body>
+</html>

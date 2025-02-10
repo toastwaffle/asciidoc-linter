@@ -1,0 +1,2278 @@
+<!doctype html>
+<html lang="de">
+<head>
+    
+    <!-- sourceuri: manual/index.html -->
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="jbake" name="generator">
+    <meta content="INDEX, FOLLOW" name="ROBOTS">
+
+    <title>AsciiDoc Linter Manual</title>
+    <meta content="docToolchain" property="og:title">
+    <meta content="build your dev docs the easy way..." property="og:description">
+    <meta content="website" property="og:type">
+    <meta content="docToolchain" property="og:site_name">
+    <meta content="docToolchain" itemprop="name">
+    <meta content="build your dev docs the easy way..." itemprop="description">
+    <meta content="summary" name="twitter:card">
+    <meta content="docToolchain" name="twitter:title">
+    <meta content="build your dev docs the easy way..." name="twitter:description">
+
+    <link as="style"
+        href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+        rel="preload">
+    <link href="../css/main.min.881fe5f7b53609f55ebfb496c7097c3b30b2e8ceb20a54bc6a48350ded67224f.css"
+        integrity=""
+        rel="stylesheet">
+    <link href="../css/asciidoctor.css" rel="stylesheet">
+    <link href="../css/prettify.css" rel="stylesheet">
+
+    <!-- favicon generated with https://www.favicon-generator.org/ -->
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="../apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <script src="../js/jquery-3.5.1.min.js"></script>
+    <style>
+    div.bg-light {
+        background-color: rgba(127, 180, 224, 0.3) !important;
+    }
+
+    /* for blog posts */
+    span.blogtag {
+        border-radius: 10px;
+        background-color: #30638E;
+        color: white;
+        padding: 5px 10px;
+    }
+
+    span.blogblogtag a {
+        color: white;
+        padding: 0
+    }
+
+    span.blogtag span {
+        margin-left: 10px;
+        border-radius: 10px;
+        background-color: white;
+        color: #30638E;
+    }
+
+    div.td-toc {
+        height: calc(100vh - 5rem) !important;
+    }
+
+    div#toctitle {
+        display: none
+    }
+
+    #td-section-nav {
+        max-height: calc(100vh - 4rem);
+        font-size: smaller;
+        line-height: 1.1;
+    }
+
+    .td-page-meta {
+        font-size: smaller;
+        line-height: 1.1;
+    }
+
+    #td-section-nav ul.td-sidebar-nav__section {
+        padding-left: 0;
+    }
+
+    span.navbar-logo {
+        padding-right: 1.5em;
+    }
+
+    .match {
+        font-size: smaller;
+    }
+
+    .admonitionblock td.icon .fa:before {
+        font-size: xxx-large;
+    }
+    </style>
+
+    <style>
+    div.openblock.primary div.content, div.openblock.secondary div.content {
+        border: 1px solid #7a2518;
+        padding: 5px;
+    }
+
+    div.openblock.primary div.content div.content, div.openblock.secondary div.content div.content {
+        border: 0 solid #7a2518;
+        padding: 0;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .switch {
+        border-width: 1px 1px 0 1px;
+        border-style: solid;
+        border-color: #7a2518;
+        display: inline-block;
+    }
+
+    .switch--item {
+        padding: 2px 10px;
+        background-color: #ffffff;
+        color: #7a2518;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .switch--item:not(:first-child) {
+        border-width: 0 0 0 1px;
+        border-style: solid;
+        border-color: #7a2518;
+    }
+
+    .switch--item.selected {
+        background-color: #7a2519;
+        color: #ffffff;
+    }
+    </style>
+
+    <!-- copy-n-paste.js -->
+    <style>
+        div.listingblock {
+            position: relative;
+        }
+        div.listingblock > span.icon {
+            position: absolute;
+            top: 2px;
+            right: 6px;
+            visibility: hidden;
+            z-index: 2;
+            cursor: pointer;
+        }
+        div.listingblock:hover > span.icon {
+            visibility: visible;
+        }
+        div.listingblock div.content pre {
+            margin: 0;
+        }
+    </style>
+    <style>
+        .td-sidebar-nav__section {
+            padding-left: 9px;
+        }
+        details {
+            margin-left: 10px;
+        }
+        summary {
+            cursor: pointer;
+            padding-left: 10px; /* Erhöhter linker Padding für den Pfeil */
+            list-style: none;
+            position: relative; /* Für absolute Positionierung des Pfeils */
+        }
+        summary::before {
+            content: '>';
+            position: absolute;
+            left: 10px; /* Position des Pfeils */
+            top: 50%;
+            transform: translateY(-50%) translateX(-120%);
+            transition: transform 0.3s;
+        }
+        details[open] > summary::before {
+            transform: translateY(-50%) translateX(-120%) rotate(90deg);
+        }
+    </style>
+</head>
+
+<body onload="prettyPrint()" class="td-section">
+<header>
+	
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+    <a class="navbar-brand" href="../index.html">
+        <span class="navbar-logo"><img src="../images/doctoolchain-logo-blue.png" alt="docToolchain" width="32px" /></span><span
+            class="font-weight-bold">AsciiDoc-Linter</span>
+    </a>
+    <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+        <ul class="navbar-nav mt-2 mt-lg-0">
+    <li class="nav-item mr-4 mb-2 mb-lg-0"><!--img src="../images/status.png" alt="status" width="16" height="16" onerror="this.style.display='none'"--></li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link " href="../test-results/test-report.html"><span>test-results</span></a>
+            </li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link " href="../arc42/index.html"><span>arc42</span></a>
+            </li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link active" href="../manual/index.html"><span>manual</span></a>
+            </li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link " href="../canvas/architecture-canvas.html"><span>canvas</span></a>
+            </li>
+
+            <li class="nav-item mr-4 mb-2 mb-lg-0">
+                <a class="nav-link " href="../readme/README.html"><span>readme</span></a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="navbar-nav d-none d-lg-block" >
+        <form action="../search.html">
+        <input aria-label="Search this site…" autocomplete="off" class="form-control td-search-input"
+               placeholder=" Search this site…" type="search" name="q">
+        </form>
+    </div>
+</nav>
+
+</header>
+<div class="container-fluid td-outer">
+	<div class="td-main">
+		<div class="row flex-xl-nowrap">
+			<div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+				<div class="td-sidebar__inner" id="td-sidebar-menu" >
+					
+
+        <form class="td-sidebar__search d-flex align-items-center d-lg-none" action="../search.html">
+
+            <input aria-label="Search this site…" name="q" autocomplete="off" class="form-control td-search-input"
+                   placeholder=" Search this site…" type="search">
+
+
+            <button aria-controls="td-docs-nav" aria-expanded="false"
+                    aria-label="Toggle section navigation" class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" data-target="#td-section-nav"
+                    data-toggle="collapse" type="button">
+            </button>
+        </form>
+
+        <nav aria-label="Submenu" class="collapse td-sidebar-nav" id="td-section-nav" >
+
+            <ul class="td-sidebar-nav__section">
+                <li class="td-sidebar-nav__section-title">
+                    <span class="align-left pl-0 pr-2 pt-2 active td-sidebar-link td-sidebar-link__section">manual</span>
+                </li>
+                <li>
+                  <ul>
+                      <li class="collapse show" id="docs">
+                          
+                        <ul class="td-sidebar-nav__section ul-0">
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section active"
+                                   href="../manual/index.html" title="AsciiDoc Linter Manual">AsciiDoc Linter Manual</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../manual/rules.html" title="AsciiDoc Linter Rules">AsciiDoc Linter Rules</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../manual/development.html" title="Development Guide">Development Guide</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../manual/introduction.html" title="Introduction">Introduction</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../manual/testing.html" title="Testing Strategy and Guide">Testing Strategy and Guide</a>
+                                
+                            </li>
+                            <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child">
+                                <a class="align-left pl-0 pr-2 pt-2 td-sidebar-link td-sidebar-link__section "
+                                   href="../manual/usage.html" title="Usage Guide">Usage Guide</a>
+                                
+                            </li>
+                        </ul>
+                      </li>
+                  </ul>
+                <li>
+        </nav>
+
+				</div>
+			</div>
+			<div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+				<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+					
+
+        <a href="##git-repo-url##/manual/index.adoc"
+           target="_blank"><i class="fa fa-edit fa-fw"></i> Improve this doc</a>
+
+
+        <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Manual%27&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:%20##git-repo-url##/manual/index.adoc%0A%23branch:%20main" target="_blank"><i
+                class="fab fa-github fa-fw"></i> Create an issue</a>
+
+        
+
+        <hr />
+
+        <div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_asciidoc_linter_manual">AsciiDoc Linter Manual</a>
+<ul class="sectlevel2">
+<li><a href="#_introduction">Introduction</a></li>
+<li><a href="#_development_guide">Development Guide</a></li>
+<li><a href="#_testing_strategy_and_guide">Testing Strategy and Guide</a></li>
+<li><a href="#_usage_guide">.1. Usage Guide</a></li>
+<li><a href="#_asciidoc_linter_rules">.2. AsciiDoc Linter Rules</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+
+
+				</div>
+			</div>
+			<main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+				    <nav aria-label="breadcrumb" class="d-none d-md-block d-print-none">
+        <ol class="breadcrumb spb-1">
+            <!--li aria-current="page" class="breadcrumb-item active">
+                <a href="https://example.docsy.dev/docs/">Documentation</a>
+            </li-->
+
+        </ol>
+    </nav>
+
+
+    <div class="td-content">
+        <p>
+            
+<div class="sect1">
+<h2 id="_asciidoc_linter_manual">AsciiDoc Linter Manual</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_introduction">Introduction</h3>
+<div class="sect3">
+<h4 id="_about_the_project">About the Project</h4>
+<div class="paragraph">
+<p>AsciiDoc Linter is a Python-based tool designed to help maintain high-quality AsciiDoc documentation. It checks your AsciiDoc files for common issues and style violations, helping teams maintain consistent documentation standards.</p>
+</div>
+<div class="paragraph">
+<p>As part of the docToolchain project (<a href="https://doctoolchain.org" class="bare">https://doctoolchain.org</a>), it integrates well with existing documentation workflows.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_key_features">Key Features</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Heading structure validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Proper hierarchy (no skipped levels)</p>
+</li>
+<li>
+<p>Consistent formatting</p>
+</li>
+<li>
+<p>Single top-level heading</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Block validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Proper block termination</p>
+</li>
+<li>
+<p>Consistent spacing</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Whitespace consistency</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Line spacing</p>
+</li>
+<li>
+<p>List formatting</p>
+</li>
+<li>
+<p>Tab detection</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Image validation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Attribute checking</p>
+</li>
+<li>
+<p>File existence verification</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Multiple output formats (console, JSON, HTML)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_project_goals">Project Goals</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Improve documentation quality through automated checks</p>
+</li>
+<li>
+<p>Enforce consistent styling across documentation</p>
+</li>
+<li>
+<p>Reduce manual review effort</p>
+</li>
+<li>
+<p>Catch common mistakes early in the documentation process</p>
+</li>
+<li>
+<p>Support documentation as code practices</p>
+</li>
+<li>
+<p>Integrate with existing documentation toolchains</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_technical_overview">Technical Overview</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Technology Stack</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Python 3.8+</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Testing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unittest framework</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AsciiDoc</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">YAML/JSON (planned)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_getting_started">Getting Started</h4>
+<div class="sect4">
+<h5 id="_prerequisites">Prerequisites</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Python 3.8 or higher</p>
+</li>
+<li>
+<p>Git (for installation)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_installation">Installation</h5>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Direct installation via pip is planned for future releases. Currently, installation is done via git clone.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Clone the repository
+git clone https://github.com/docToolchain/asciidoc-linter.git
+
+# Navigate to the project directory
+cd asciidoc-linter
+
+# Install the package
+pip install .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_basic_usage">Basic Usage</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Check a single file
+asciidoc-lint document.adoc
+
+# Check multiple files
+asciidoc-lint doc1.adoc doc2.adoc
+
+# Get help
+asciidoc-lint --help</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_current_status">Current Status</h4>
+<div class="sect4">
+<h5 id="_implemented_features">Implemented Features</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Core linting engine</p>
+</li>
+<li>
+<p>Basic rule set (headings, blocks, whitespace, images)</p>
+</li>
+<li>
+<p>Command-line interface</p>
+</li>
+<li>
+<p>Multiple output formats</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_planned_features">Planned Features</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration system (YAML/JSON)</p>
+</li>
+<li>
+<p>Additional rule sets (tables, links, cross-references)</p>
+</li>
+<li>
+<p>Direct installation via pip</p>
+</li>
+<li>
+<p>IDE integration</p>
+</li>
+<li>
+<p>Git pre-commit hooks</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_development_guide">Development Guide</h3>
+<div class="sect3">
+<h4 id="_setting_up_development_environment">Setting Up Development Environment</h4>
+<div class="sect4">
+<h5 id="_clone_the_repository">Clone the Repository</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">git clone https://github.com/docToolchain/asciidoc-linter.git
+cd asciidoc-linter</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_create_virtual_environment">Create Virtual Environment</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -e .</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_project_structure">Project Structure</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code>asciidoc-linter/
+├── asciidoc_linter/       # Main package
+│   ├── __init__.py
+│   ├── cli.py            # Command line interface
+│   ├── rules/            # Rule implementations
+│   │   ├── __init__.py
+│   │   ├── base.py      # Base classes for rules
+│   │   ├── heading_rules.py
+│   │   ├── block_rules.py
+│   │   ├── whitespace_rules.py
+│   │   └── image_rules.py
+│   ├── parser.py         # AsciiDoc parser
+│   └── reporter.py       # Output formatters
+├── tests/                # Test files
+│   └── rules/           # Rule-specific tests
+├── docs/                 # Documentation
+└── README.adoc</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_current_implementation_status">Current Implementation Status</h4>
+<div class="sect4">
+<h5 id="_implemented_features_2">Implemented Features</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Core rule engine with base classes</p>
+</li>
+<li>
+<p>Rule implementations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Heading rules (hierarchy, format, multiple top-level)</p>
+</li>
+<li>
+<p>Block rules (termination, spacing)</p>
+</li>
+<li>
+<p>Whitespace rules (spacing, formatting)</p>
+</li>
+<li>
+<p>Image rules (attributes, file verification)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Basic command line interface</p>
+</li>
+<li>
+<p>Multiple output formats (console, JSON, HTML)</p>
+</li>
+<li>
+<p>Comprehensive test suite</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_planned_features_2">Planned Features</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration system (YAML/JSON)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Rule enabling/disabling</p>
+</li>
+<li>
+<p>Severity customization</p>
+</li>
+<li>
+<p>Custom rule parameters</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Additional rule types</p>
+</li>
+<li>
+<p>IDE integration</p>
+</li>
+<li>
+<p>Git hooks</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_new_rules">Adding New Rules</h4>
+<div class="sect4">
+<h5 id="_rule_implementation_steps">Rule Implementation Steps</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a new rule class:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">from .base import Rule, Finding, Severity, Position
+
+class MyNewRule(Rule):
+    """
+    RULE_ID: Short description.
+    Detailed explanation of what the rule checks.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.id = "RULE_ID"
+
+    @property
+    def description(self) -&gt; str:
+        return "Description of what this rule checks"
+
+    def check(self, content: str) -&gt; List[Finding]:
+        findings = []
+        # Implementation here
+        return findings</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add tests for the rule:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">class TestMyNewRule(unittest.TestCase):
+    def setUp(self):
+        self.rule = MyNewRule()
+
+    def test_valid_case(self):
+        content = "Valid content"
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 0)
+
+    def test_invalid_case(self):
+        content = "Invalid content"
+        findings = self.rule.check(content)
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0].rule_id, "RULE_ID")</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Register the rule in the linter</p>
+</li>
+<li>
+<p>Update documentation</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_rule_guidelines">Rule Guidelines</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Clear rule IDs and descriptions</p>
+</li>
+<li>
+<p>Meaningful error messages</p>
+</li>
+<li>
+<p>Proper severity levels</p>
+</li>
+<li>
+<p>Contextual information in findings</p>
+</li>
+<li>
+<p>Comprehensive test cases</p>
+</li>
+<li>
+<p>Documentation with examples</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_code_style">Code Style</h4>
+<div class="sect4">
+<h5 id="_python_guidelines">Python Guidelines</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Follow PEP 8</p>
+</li>
+<li>
+<p>Use type hints</p>
+</li>
+<li>
+<p>Write docstrings (Google style)</p>
+</li>
+<li>
+<p>Keep functions focused and testable</p>
+</li>
+<li>
+<p>Maximum line length: 100 characters</p>
+</li>
+<li>
+<p>Use meaningful variable names</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_documentation_guidelines">Documentation Guidelines</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Use AsciiDoc format</p>
+</li>
+<li>
+<p>Include examples for all features</p>
+</li>
+<li>
+<p>Explain error messages</p>
+</li>
+<li>
+<p>Document configuration options</p>
+</li>
+<li>
+<p>Keep README.adoc up to date</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_testing">Testing</h4>
+<div class="sect4">
+<h5 id="_running_tests">Running Tests</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Run all tests
+python run_tests.py
+
+# Run specific test file
+python -m unittest tests/rules/test_heading_rules.py
+
+# Run specific test case
+python -m unittest tests.rules.test_heading_rules.TestHeadingHierarchyRule</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_test_guidelines">Test Guidelines</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Write tests for all new features</p>
+</li>
+<li>
+<p>Include both positive and negative test cases</p>
+</li>
+<li>
+<p>Test edge cases</p>
+</li>
+<li>
+<p>Maintain high test coverage</p>
+</li>
+<li>
+<p>Use meaningful test names</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pull_request_process">Pull Request Process</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create feature branch</p>
+</li>
+<li>
+<p>Implement changes</p>
+</li>
+<li>
+<p>Add/update tests</p>
+</li>
+<li>
+<p>Update documentation</p>
+</li>
+<li>
+<p>Run full test suite</p>
+</li>
+<li>
+<p>Submit PR</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_release_process">Release Process</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Update version number in <em>init</em>.py</p>
+</li>
+<li>
+<p>Update changelog</p>
+</li>
+<li>
+<p>Run full test suite</p>
+</li>
+<li>
+<p>Create release notes</p>
+</li>
+<li>
+<p>Tag release</p>
+</li>
+<li>
+<p>Build and publish</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_getting_help">Getting Help</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>GitHub Issues: <a href="https://github.com/docToolchain/asciidoc-linter/issues" class="bare">https://github.com/docToolchain/asciidoc-linter/issues</a></p>
+</li>
+<li>
+<p>Project Wiki: <a href="https://github.com/docToolchain/asciidoc-linter/wiki" class="bare">https://github.com/docToolchain/asciidoc-linter/wiki</a></p>
+</li>
+<li>
+<p>docToolchain Community: <a href="https://doctoolchain.org/community" class="bare">https://doctoolchain.org/community</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_testing_strategy_and_guide">Testing Strategy and Guide</h3>
+<div class="sect3">
+<h4 id="_test_strategy">..1. Test Strategy</h4>
+<div class="sect4">
+<h5 id="_goals_and_objectives">Goals and Objectives</h5>
+<div class="paragraph">
+<p>The testing strategy for the AsciiDoc Linter aims to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensure reliable detection of AsciiDoc formatting issues</p>
+</li>
+<li>
+<p>Prevent false positives that could frustrate users</p>
+</li>
+<li>
+<p>Maintain high code quality through comprehensive testing</p>
+</li>
+<li>
+<p>Enable safe refactoring through good test coverage</p>
+</li>
+<li>
+<p>Support rapid development through automated testing</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_test_levels">Test Levels</h5>
+<div class="sect5">
+<h6 id="_unit_tests">Unit Tests</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>Test individual rules in isolation</p>
+</li>
+<li>
+<p>Verify rule logic and error detection</p>
+</li>
+<li>
+<p>Cover edge cases and special scenarios</p>
+</li>
+<li>
+<p>Test configuration options</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_integration_tests">Integration Tests</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>Test interaction between parser and rules</p>
+</li>
+<li>
+<p>Verify correct document processing</p>
+</li>
+<li>
+<p>Test CLI interface and options</p>
+</li>
+<li>
+<p>Test reporter output formats</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_system_tests">System Tests</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>End-to-end testing of the linter</p>
+</li>
+<li>
+<p>Test with real AsciiDoc documents</p>
+</li>
+<li>
+<p>Verify correct error reporting</p>
+</li>
+<li>
+<p>Test performance with large documents</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_test_coverage_goals">Test Coverage Goals</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Component</th>
+<th class="tableblock halign-left valign-top">Target Coverage</th>
+<th class="tableblock halign-left valign-top">Current Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core (parser, linter)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rules</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">95%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">88%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CLI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">80%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reporter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">85%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0%</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overall</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">90%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">61%</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_quality_metrics">Quality Metrics</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Line Coverage: Minimum 90%</p>
+</li>
+<li>
+<p>Branch Coverage: Minimum 85%</p>
+</li>
+<li>
+<p>Mutation Score: Minimum 80%</p>
+</li>
+<li>
+<p>Test Success Rate: 100%</p>
+</li>
+<li>
+<p>No known bugs in production</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_test_implementation">..2. Test Implementation</h4>
+<div class="sect4">
+<h5 id="_test_organization">Test Organization</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code>tests/
+├── __init__.py
+├── rules/              # Rule-specific tests
+│   ├── __init__.py
+│   ├── test_heading_rules.py
+│   ├── test_block_rules.py
+│   ├── test_image_rules.py
+│   └── test_whitespace_rules.py
+├── integration/        # Integration tests
+│   ├── __init__.py
+│   ├── test_parser_rules.py
+│   └── test_cli_reporter.py
+├── system/            # System tests
+│   ├── __init__.py
+│   ├── test_large_docs.py
+│   └── test_real_projects.py
+├── test_cli.py        # CLI tests
+├── test_parser.py     # Parser tests
+├── test_reporter.py   # Reporter tests
+└── test_linter.py     # Core linter tests</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_test_patterns">Test Patterns</h5>
+<div class="sect5">
+<h6 id="_rule_tests">Rule Tests</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">def test_rule_pattern(self):
+    # Given: Setup test data and context
+    content = "test content"
+    rule = TestRule(config)
+
+    # When: Execute the rule
+    findings = rule.check(content)
+
+    # Then: Verify results
+    assert_findings(findings)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_integration_tests_2">Integration Tests</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">def test_integration_pattern(self):
+    # Given: Setup test environment
+    doc = create_test_document()
+    linter = setup_linter()
+
+    # When: Process document
+    results = linter.process(doc)
+
+    # Then: Verify complete workflow
+    verify_results(results)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_test_data_management">Test Data Management</h5>
+<div class="sect5">
+<h6 id="_test_documents">Test Documents</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>Maintain a collection of test documents</p>
+</li>
+<li>
+<p>Include both valid and invalid examples</p>
+</li>
+<li>
+<p>Document the purpose of each test file</p>
+</li>
+<li>
+<p>Version control test data</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_test_fixtures">Test Fixtures</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>Use pytest fixtures for common setup</p>
+</li>
+<li>
+<p>Share test data between related tests</p>
+</li>
+<li>
+<p>Clean up test environment after each test</p>
+</li>
+<li>
+<p>Mock external dependencies</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_tests_2">..3. Running Tests</h4>
+<div class="sect4">
+<h5 id="_local_development">Local Development</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Run all tests
+python run_tests.py
+
+# Run with coverage
+coverage run -m pytest
+coverage report
+coverage html
+
+# Run specific test categories
+pytest tests/rules/
+pytest tests/integration/
+pytest tests/system/</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_continuous_integration">Continuous Integration</h5>
+<div class="sect5">
+<h6 id="_github_actions_workflow">GitHub Actions Workflow</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">name: Test Suite
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, "3.10"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          coverage run -m pytest
+          coverage report
+          coverage xml
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_test_maintenance">..4. Test Maintenance</h4>
+<div class="sect4">
+<h5 id="_regular_activities">Regular Activities</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Review test coverage reports weekly</p>
+</li>
+<li>
+<p>Update tests for new features</p>
+</li>
+<li>
+<p>Refactor tests when needed</p>
+</li>
+<li>
+<p>Review test performance</p>
+</li>
+<li>
+<p>Update test documentation</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_quality_checks">Quality Checks</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Run mutation testing monthly</p>
+</li>
+<li>
+<p>Review test maintainability</p>
+</li>
+<li>
+<p>Check for flaky tests</p>
+</li>
+<li>
+<p>Verify test isolation</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_appendix">..5. Appendix</h4>
+<div class="sect4">
+<h5 id="_test_templates">Test Templates</h5>
+<div class="sect5">
+<h6 id="_unit_test_template">Unit Test Template</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="python">class TestRuleName(unittest.TestCase):
+    def setUp(self):
+        """Setup test environment"""
+        self.rule = RuleUnderTest()
+
+    def test_valid_case(self):
+        """Test with valid input"""
+        # Given
+        content = "valid content"
+
+        # When
+        findings = self.rule.check(content)
+
+        # Then
+        self.assertEqual(len(findings), 0)
+
+    def test_invalid_case(self):
+        """Test with invalid input"""
+        # Given
+        content = "invalid content"
+
+        # When
+        findings = self.rule.check(content)
+
+        # Then
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0].severity, Severity.ERROR)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_test_checklists">Test Checklists</h5>
+<div class="sect5">
+<h6 id="_new_feature_checklist">New Feature Checklist</h6>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Unit tests written</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Integration tests updated</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> System tests verified</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Coverage goals met</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Documentation updated</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_test_review_checklist">Test Review Checklist</h6>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> Tests follow patterns</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Coverage adequate</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Edge cases covered</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Error cases tested</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Documentation clear</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_references">..6. References</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.pytest.org/">Pytest Documentation</a></p>
+</li>
+<li>
+<p><a href="https://coverage.readthedocs.io/">Coverage.py Documentation</a></p>
+</li>
+<li>
+<p><a href="https://github.com/marketplace/actions/codecov">Codecov GitHub Action</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_usage_guide">.1. Usage Guide</h3>
+<div class="sect3">
+<h4 id="_command_line_interface">.1.1. Command Line Interface</h4>
+<div class="sect4">
+<h5 id="_basic_usage_2">Basic Usage</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Check a single file
+asciidoc-lint document.adoc
+
+# Check multiple files
+asciidoc-lint doc1.adoc doc2.adoc
+
+# Check with specific output format
+asciidoc-lint --format json document.adoc
+
+# Use specific configuration
+asciidoc-lint --config my-config.yml document.adoc</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_command_line_options">Command Line Options</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">console</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Output format (console, json, html)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to configuration file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--verbose</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable verbose output</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--quiet</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Suppress non-error output</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration">.1.2. Configuration</h4>
+<div class="sect4">
+<h5 id="_configuration_file">Configuration File</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml"># .asciidoc-lint.yml
+rules:
+  HEAD001:
+    enabled: true
+    severity: error
+  HEAD002:
+    enabled: true
+    severity: warning</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_rule_configuration">Rule Configuration</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Enable/disable rules</p>
+</li>
+<li>
+<p>Set severity levels</p>
+</li>
+<li>
+<p>Configure rule-specific options</p>
+</li>
+<li>
+<p>Set file patterns</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_output_formats">.1.3. Output Formats</h4>
+<div class="sect4">
+<h5 id="_console_output">Console Output</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code>document.adoc:15 ERROR: Heading level skipped
+document.adoc:23 WARNING: Heading should start with uppercase</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_json_output">JSON Output</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="json">{
+  "findings": [
+    {
+      "rule": "HEAD001",
+      "severity": "error",
+      "message": "Heading level skipped",
+      "line": 15
+    }
+  ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_html_report">HTML Report</h5>
+<div class="paragraph">
+<p>Generates a detailed HTML report with:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Summary statistics</p>
+</li>
+<li>
+<p>Detailed findings</p>
+</li>
+<li>
+<p>Source context</p>
+</li>
+<li>
+<p>Rule explanations</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_integration">.1.4. Integration</h4>
+<div class="sect4">
+<h5 id="_git_pre_commit_hook">Git Pre-commit Hook</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">#!/bin/sh
+files=$(git diff --cached --name-only --diff-filter=ACM | grep '.adoc$')
+if [ -n "$files" ]; then
+    asciidoc-lint $files
+fi</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_cicd_integration">CI/CD Integration</h5>
+<div class="listingblock">
+<div class="title">GitHub Actions Example</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="yaml">name: Lint AsciiDoc
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lint Documentation
+        run: |
+          pip install asciidoc-linter
+          asciidoc-lint docs/</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_best_practices">.1.5. Best Practices</h4>
+<div class="sect4">
+<h5 id="_document_organization">Document Organization</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Use consistent heading levels</p>
+</li>
+<li>
+<p>Add blank lines around blocks</p>
+</li>
+<li>
+<p>Use proper formatting</p>
+</li>
+<li>
+<p>Include alt text for images</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_error_resolution">Error Resolution</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Common Issues and Solutions</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Issue</th>
+<th class="tableblock halign-left valign-top">Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Skipped heading level</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ensure heading levels increment by one</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Missing space after =</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add space after heading markers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Multiple top-level headings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use only one level-1 heading per document</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_troubleshooting">.1.6. Troubleshooting</h4>
+<div class="sect4">
+<h5 id="_common_problems">Common Problems</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration file not found</p>
+</li>
+<li>
+<p>Rule conflicts</p>
+</li>
+<li>
+<p>Performance issues</p>
+</li>
+<li>
+<p>False positives</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_debug_mode">Debug Mode</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash"># Enable debug output
+asciidoc-lint --debug document.adoc
+
+# Show rule processing details
+asciidoc-lint --verbose document.adoc</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_asciidoc_linter_rules">.2. AsciiDoc Linter Rules</h3>
+<div class="sect3">
+<h4 id="_heading_rules">.2.1. Heading Rules</h4>
+<div class="sect4">
+<h5 id="_head001_heading_hierarchy">HEAD001: Heading Hierarchy</h5>
+<div class="paragraph">
+<p>Ensures proper heading level incrementation (no skipped levels).</p>
+</div>
+<div class="sect5">
+<h6 id="_description">Description</h6>
+<div class="paragraph">
+<p>This rule checks that heading levels are not skipped. For example, you cannot go from a level 1 heading (=) directly to a level 3 heading (===) without having a level 2 heading (==) in between.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_examples">Examples</h6>
+<div class="listingblock">
+<div class="title">Valid Heading Hierarchy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title (Level 1)
+
+=== Section (Level 2)
+
+==== Subsection (Level 3)
+
+=== Another Section (Level 2)</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Heading Hierarchy</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title (Level 1)
+
+==== Subsection (Level 3)  // Error: Skipped Level 2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_head002_heading_format">HEAD002: Heading Format</h5>
+<div class="paragraph">
+<p>Ensures proper heading format (spacing and capitalization).</p>
+</div>
+<div class="sect5">
+<h6 id="_description_2">Description</h6>
+<div class="paragraph">
+<p>This rule checks two aspects of heading format:
+1. There must be a space after the = characters
+2. The heading text should start with an uppercase letter</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_examples_2">Examples</h6>
+<div class="listingblock">
+<div class="title">Valid Heading Format</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title
+=== Section Title
+==== Subsection Title</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Heading Format</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">=Document Title        // Error: No space after =
+=== section title      // Warning: Starts with lowercase</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_head003_multiple_top_level_headings">HEAD003: Multiple Top Level Headings</h5>
+<div class="paragraph">
+<p>Ensures document has only one top-level heading.</p>
+</div>
+<div class="sect5">
+<h6 id="_description_3">Description</h6>
+<div class="paragraph">
+<p>This rule checks that there is only one level 1 heading (=) in the document. Multiple top-level headings can indicate structural problems or accidentally split documents.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_examples_3">Examples</h6>
+<div class="listingblock">
+<div class="title">Valid Single Top Level</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Main Document Title
+
+=== Section One
+=== Section Two</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Multiple Top Level</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== First Title
+
+=== Section One
+
+== Second Title  // Error: Multiple top-level headings</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_block_rules">.2.2. Block Rules</h4>
+<div class="sect4">
+<h5 id="_block001_unterminated_blocks">BLOCK001: Unterminated Blocks</h5>
+<div class="paragraph">
+<p>Checks for blocks that are not properly terminated.</p>
+</div>
+<div class="sect5">
+<h6 id="_description_4">Description</h6>
+<div class="paragraph">
+<p>This rule ensures that all block delimiters are properly paired. Each opening delimiter must have a matching closing delimiter.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_supported_block_types">Supported Block Types</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>Listing blocks (----)</p>
+</li>
+<li>
+<p>Example blocks (====)</p>
+</li>
+<li>
+<p>Sidebar blocks (****)</p>
+</li>
+<li>
+<p>Literal blocks (&#8230;&#8203;.)</p>
+</li>
+<li>
+<p>Quote blocks (<em>_\_</em>)</p>
+</li>
+<li>
+<p>Table blocks (|===)</p>
+</li>
+<li>
+<p>Comment blocks (////)</p>
+</li>
+<li>
+<p>Passthrough blocks (+\+).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_examples_4">Examples</h6>
+<div class="listingblock">
+<div class="title">Valid Block Termination</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">[source,python]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>def hello():
+    print("Hello, World!")</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>.Example Block
+====
+Some example content
+====</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Block Termination</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">[source,python]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>def hello():
+    print("Hello, World!")</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. Example Block</div>
+<div class="content">
+<div class="paragraph">
+<p>Some example content</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>==== BLOCK002: Block Spacing
+
+Verifies proper spacing around blocks.
+
+===== Description
+
+This rule checks that blocks are properly separated from surrounding content with blank lines, improving readability.
+
+===== Examples
+
+.Valid Block Spacing
+[source,asciidoc]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some text before the block.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Block content</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some text after the block.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>.Invalid Block Spacing
+[source,asciidoc]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some text before the block.
+----  // Warning: No blank line before block
+Block content</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Some text after the block.  // Warning: No blank line after block</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Whitespace Rules</p>
+</div>
+<div class="paragraph">
+<p>==== WS001: Whitespace Usage</p>
+</div>
+<div class="paragraph">
+<p>Ensures proper whitespace usage throughout the document.</p>
+</div>
+<div class="paragraph">
+<p>===== Checks Performed</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Consecutive Empty Lines</strong>: No more than one consecutive empty line</p>
+</li>
+<li>
+<p><strong>List Marker Spacing</strong>: Proper space after list markers (*, -, .)</p>
+</li>
+<li>
+<p><strong>Admonition Block Spacing</strong>: Blank line before admonition blocks</p>
+</li>
+<li>
+<p><strong>Trailing Whitespace</strong>: No trailing spaces at end of lines</p>
+</li>
+<li>
+<p><strong>Tab Usage</strong>: No tabs (use spaces instead)</p>
+</li>
+<li>
+<p><strong>Section Title Spacing</strong>: Blank lines around section titles</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>===== Examples</p>
+</div>
+<div class="listingblock">
+<div class="title">Valid Whitespace Usage</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title
+
+=== Section Title
+
+* List item 1
+* List item 2
+
+NOTE: This is a note.
+
+Some text here.</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Whitespace Usage</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">== Document Title
+=== Section Title     // Missing blank line before
+*Invalid list item   // Missing space after marker
+NOTE: Invalid note   // Missing blank line before
+Some text here  // Trailing spaces
+	Tabbed line      // Tab instead of spaces
+
+
+Extra blank line     // Too many blank lines</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Image Rules</p>
+</div>
+<div class="paragraph">
+<p>==== IMG001: Image Attributes</p>
+</div>
+<div class="paragraph">
+<p>Verifies image attributes and file references.</p>
+</div>
+<div class="paragraph">
+<p>===== Description</p>
+</div>
+<div class="paragraph">
+<p>This rule checks:
+1. All images have alt text
+2. Referenced local images exist
+3. Block images have titles
+4. Image attributes are properly formatted</p>
+</div>
+<div class="paragraph">
+<p>===== Examples</p>
+</div>
+<div class="listingblock">
+<div class="title">Valid Image Usage</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">// Inline image with alt text
+image:icon.png[Icon]
+
+// Block image with title and alt text
+.Figure 1: System Architecture
+image::diagram.png[Architecture Diagram]
+
+// External image with alt text
+image:https://example.com/img.png[Example Image]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Invalid Image Usage</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="asciidoc">// Missing alt text
+image:icon.png[]
+
+// Missing title for block image
+image::diagram.png[Diagram]
+
+// Non-existent local file
+image::missing.png[Missing Image]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>=== Planned Rules</p>
+</div>
+<div class="paragraph">
+<p>==== TABLE001: Table Formatting (Planned)</p>
+</div>
+<div class="paragraph">
+<p>Will check table formatting consistency:
+* Column alignment
+* Header row presence
+* Cell content formatting</p>
+</div>
+<div class="paragraph">
+<p>==== LINK001: Link Verification (Planned)</p>
+</div>
+<div class="paragraph">
+<p>Will verify:
+* Internal cross-references
+* External link validity
+* Anchor definitions</p>
+</div>
+<div class="paragraph">
+<p>==== FMT001: Format Consistency (Planned)</p>
+</div>
+<div class="paragraph">
+<p>Will check:
+* Consistent emphasis style
+* List formatting
+* Admonition usage</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+        </p>
+
+        <style>
+.feedback--answer {
+    display: inline-block;
+}
+
+.feedback--answer-no {
+    margin-left: 1em;
+}
+
+.feedback--response {
+    display: none;
+    margin-top: 1em;
+}
+
+.feedback--response__visible {
+    display: block;
+}
+</style>
+
+<div class="d-print-none">
+    <h2 class="feedback--title">Feedback</h2>
+    <p class="feedback--question">Was this page helpful?</p>
+    <button class="feedback--answer feedback--answer-yes">Yes</button>
+    <button class="feedback--answer feedback--answer-no">No</button>
+    <p class="feedback--response feedback--response-yes">
+        Glad to hear it! Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Manual%27%20%F0%9F%91%8D&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/index.adoc">tell us
+    how we can improve</a>.
+    </p>
+    <p class="feedback--response feedback--response-no">
+        Sorry to hear that. Please <a href="##issue-url##?title=Docs%3A+Feedback+for+%27AsciiDoc+Linter+Manual%27%20%F0%9F%91%8E&body=%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23page:manual/index.adoc">tell
+    us how we can improve</a>.
+    </p>
+</div>
+<script>
+    const yesButton = document.querySelector('.feedback--answer-yes');
+    const noButton = document.querySelector('.feedback--answer-no');
+    const yesResponse = document.querySelector('.feedback--response-yes');
+    const noResponse = document.querySelector('.feedback--response-no');
+    const disableButtons = () => {
+        yesButton.disabled = true;
+        noButton.disabled = true;
+    };
+    const sendFeedback = (value) => {
+        if (typeof ga !== 'function') return;
+        const args = {
+            command: 'send',
+            hitType: 'event',
+            category: 'Helpful',
+            action: 'click',
+            label: window.location.pathname,
+            value: value
+        };
+        ga(args.command, args.hitType, args.category, args.action, args.label, args.value);
+    };
+    yesButton.addEventListener('click', () => {
+        yesResponse.classList.add('feedback--response__visible');
+        disableButtons();
+        sendFeedback(1);
+    });
+    noButton.addEventListener('click', () => {
+        noResponse.classList.add('feedback--response__visible');
+        disableButtons();
+        sendFeedback(0);
+    });
+</script>
+
+
+        <br>
+
+        <!--div class="text-muted mt-5 pt-3 border-top">Last modified July 3, 2019: <a
+                href="https://github.com/google/docsy-example/commit/d6aa89c8b24089d7e6741030864eff209465e896">Added
+            links to user guide repo (d6aa89c)</a>
+        </div-->
+    </div>
+
+
+			</main>
+
+		</div>
+	</div>
+
+
+	
+    <!--footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">&copy; 2020 | based on <a href="https://arc42.org">arc42 7.0</a> | mixed with <a href="http://getbootstrap.com/">Bootstrap v5.0.0-beta</a> | Baked with <a href="http://jbake.org">JBake v2.6.7</a></span>
+        </div>
+    </footer-->
+
+    <footer class="bg-dark py-5 row d-print-none">
+        <div class="container-fluid mx-sm-5">
+            <div class="row">
+                <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+
+
+                    <ul class="list-inline mb-0">
+                        
+                        <li aria-label="User mailing list" class="list-inline-item mx-2 h3" data-original-title="User mailing list" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="mailto:##footer-email##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        </li>
+                        
+                        
+                        <li aria-label="Twitter" class="list-inline-item mx-2 h3" data-original-title="Twitter" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##twitter-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        
+                        
+                        <li aria-label="Stack Overflow" class="list-inline-item mx-2 h3" data-original-title="Stack Overflow" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##Stackoverflow-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-stack-overflow"></i>
+                            </a>
+                        </li>
+                        
+                    </ul>
+
+
+                </div>
+                <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+
+
+                    <ul class="list-inline mb-0">
+
+                        
+                        <li aria-label="GitHub" class="list-inline-item mx-2 h3" data-original-title="GitHub" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##Github-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </li>
+                        
+
+                        
+                        <li aria-label="Slack" class="list-inline-item mx-2 h3" data-original-title="Slack" data-placement="top"
+                            data-toggle="tooltip" title="">
+                            <a class="text-white" href="##Slack-url##" rel="noopener noreferrer"
+                               target="_blank">
+                                <i class="fab fa-slack"></i>
+                            </a>
+                        </li>
+                        
+
+
+                    </ul>
+
+
+                </div>
+                <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+
+                        <small class="text-white">built with <a href="https://doctoolchain.org">docToolchain</a> and <a href="https://jbake.org">jBake</a> <br /> theme: <a href="https://www.docsy.dev/">docsy</a></small>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+
+    <script src="../js/main.min.b5fc1b29d2465835844254bd4d804738eaf24c0cec53009b4c6899989be55a47.js"></script>
+    <script src="../js/blocks.js" ></script>
+    <script src="../js/prettify.js"></script>
+    <script src="../js/copy-n-paste.js"></script>
+    <script src="../js/submenucollapse.js"></script>
+
+
+</body>
+</html>
